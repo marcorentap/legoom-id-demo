@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Inertia\Inertia;
 use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
