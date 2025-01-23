@@ -33,14 +33,13 @@ export default function Authorize(props: PageProps) {
         <input type="hidden" name="client_id" value={client.id} />
         <input type="hidden" name="auth_token" value={authToken} />
         <input type="hidden" name="state" value={request.state} />
-        <PrimaryButton color="blue">Authorize</PrimaryButton>
+        <Button color="blue" type="submit">Authorize</Button>
       </form>
       <form method="post" action={route('passport.authorizations.deny')}>
-        <input type="hidden" name="_token" value={csrfToken} />
+        <input type="hidden" name="state" value={request.state} />
         <input type="hidden" name="client_id" value={client.id} />
         <input type="hidden" name="auth_token" value={authToken} />
-        <input type="hidden" name="state" value={request.state} />
-        <Button color="red">Cancel</Button>
+        <Button color="red" type="submit">Cancel</Button>
       </form>
 
     </MantineProvider>
