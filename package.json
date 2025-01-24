@@ -38,6 +38,7 @@
         "vite": "^6.0"
     },
     "dependencies": {
+        "@fontsource/inter": "^5.1.1",
         "@mantine/core": "^7.16.1",
         "@mantine/hooks": "^7.16.1"
     }
