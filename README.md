@@ -26,4 +26,9 @@ In another terminal, run
 ./vendor/bin/sail artisan migrate
 ```
 
+Generate client id and secret and save it
+```
+./vendor/bin/sail artisan passport:client
+```
+
 By default, the application will be available on [http://localhost](http://localhost)
