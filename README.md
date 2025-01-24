@@ -26,7 +26,7 @@ In another terminal, run
 ./vendor/bin/sail artisan migrate
 ```
 
-Generate client id and secret and save it
+Generate client id and secret and save it. If you are using the [demo app](https://github.com/marcorentap/legoom-app-demo), the callback is `<DEMO_APP_URL>/callback`
 ```
 ./vendor/bin/sail artisan passport:client
 ```
