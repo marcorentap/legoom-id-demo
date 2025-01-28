@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/settings', [SettingsController::class, 'account'])->name('settings');
+    Route::get('/settings', [SettingsController::class, 'show'])->name('settings');
 });
 
 require __DIR__ . '/auth.php';
