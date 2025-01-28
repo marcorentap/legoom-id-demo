@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\PassportOverride\AuthorizationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,7 +13,6 @@ Route::get('/', function (Request $request) {
             "user_id" => $user->id,
             "user_name" => $user->name
         ]);
-        
     }
 
     return Inertia::render('GuestHomepage');
@@ -22,6 +21,10 @@ Route::get('/', function (Request $request) {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/oauth/authorize',
+    [AuthorizationController::class, 'authorize']
+);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

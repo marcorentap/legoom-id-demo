@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
 use Laravel\Passport\Passport;
+use App\Http\Controllers\PassportOverride\AuthorizationController;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +17,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->when(AuthorizationController::class)
+            ->needs(StatefulGuard::class)
+            ->give(fn() => Auth::guard(config('passport.guard', null)));
+        // Passport::ignoreRoutes('/oauth/authorize');
     }
 
     /**
