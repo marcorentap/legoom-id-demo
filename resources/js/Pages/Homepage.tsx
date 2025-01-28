@@ -10,15 +10,17 @@ export default function Homepage(props: PageProps) {
   const { user_id, user_name } = props;
   return (
     <>
-      <Head title="Home" />
+      <Head title="Home" >
+        <link rel="icon" href={LegoomIDLogo} />
+      </Head>
       <AppShell header={{ height: 60 }}>
         <AppShell.Header withBorder={false}>
           <Center h="100%">
             <Group w={1200} px="md" justify="space-between">
               <Image src={LegoomIDLogo} h={32} w="auto" />
               <Group>
-                <Link href={route("profile.edit")}>
-                  <Text fw="700" size="sm">Manage</Text>
+                <Link href={route("settings")}>
+                  <Text fw="700" size="sm">Settings</Text>
                 </Link>
                 <Link method="post" href={route("logout")}>
                   <Text fw="700" size="sm" c="red">Logout</Text>

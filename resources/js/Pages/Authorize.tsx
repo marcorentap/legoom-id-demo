@@ -18,7 +18,9 @@ export default function Authorize(props: PageProps) {
 
   return (
     <MantineProvider>
-      <Head title="Authorize" />
+      <Head title="Authorize" >
+        <link rel="icon" href={LegoomIDLogo} />
+      </Head>
       <Container h={height} w={width}>
         <Center>
           <Card>

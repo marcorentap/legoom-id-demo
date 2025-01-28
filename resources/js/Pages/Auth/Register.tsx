@@ -5,6 +5,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { TextInput, MantineProvider } from '@mantine/core';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
+import LegoomIDLogo from '../../../../resources/images/LegoomID.svg';
 
 export default function Register() {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -25,7 +26,9 @@ export default function Register() {
   return (
     <GuestLayout>
       <MantineProvider>
-        <Head title="Register" />
+        <Head title="Register" >
+          <link rel="icon" href={LegoomIDLogo} />
+        </Head>
 
         <form onSubmit={submit}>
           <div>

@@ -6,6 +6,7 @@ import { MantineProvider, TextInput } from '@mantine/core';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
+import LegoomIDLogo from '../../../../resources/images/LegoomID.svg';
 
 export default function Login({
   status,
@@ -31,7 +32,9 @@ export default function Login({
   return (
     <GuestLayout>
       <MantineProvider>
-        <Head title="Log in" />
+        <Head title="Log in" >
+          <link rel="icon" href={LegoomIDLogo} />
+        </Head>
 
         {status && (
           <div className="mb-4 text-sm font-medium text-green-600">
