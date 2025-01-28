@@ -17,7 +17,9 @@ export default function Homepage(props: PageProps) {
         <AppShell.Header withBorder={false}>
           <Center h="100%">
             <Group w={1200} px="md" justify="space-between">
-              <Image src={LegoomIDLogo} h={32} w="auto" />
+              <Anchor href="/">
+                <Image src={LegoomIDLogo} h={32} w="auto" />
+              </Anchor>
               <Group>
                 <Link href={route("settings")}>
                   <Text fw="700" size="sm">Settings</Text>

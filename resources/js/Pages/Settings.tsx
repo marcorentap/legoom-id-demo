@@ -1,4 +1,4 @@
-import { Text, AppShell, Group, Image, Center, NavLink, Stack } from "@mantine/core";
+import { Text, AppShell, Group, Image, Center, NavLink, Stack, Anchor } from "@mantine/core";
 import { Head, Link } from "@inertiajs/react";
 import LegoomIDLogo from "../../images/LegoomID.svg";
 import { ReactNode, useState } from "react";
@@ -10,7 +10,7 @@ import { useHash } from "@mantine/hooks";
 
 export default function Account(props: SettingsProps): ReactNode {
 
-  const [hash, setHash] = useHash({getInitialValueInEffect: false});
+  const [hash, setHash] = useHash({ getInitialValueInEffect: false });
 
   if (!hash) {
     setHash("Account");
@@ -24,7 +24,9 @@ export default function Account(props: SettingsProps): ReactNode {
       <AppShell.Header withBorder={false}>
         <Center h="100%">
           <Group w={1200} px="md" justify="space-between">
-            <Image src={LegoomIDLogo} h={32} w="auto" />
+            <Anchor href="/">
+              <Image src={LegoomIDLogo} h={32} w="auto" />
+            </Anchor>
             <Group>
               <Link href={route("settings")}>
                 <Text fw="700" size="sm">Settings</Text>

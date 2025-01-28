@@ -13,7 +13,7 @@ import { createTheme, MantineProvider } from '@mantine/core';
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 const theme = createTheme({
-  fontFamily: "Inter, sans-serif"
+  fontFamily: "Inter, sans-serif",
 });
 
 createInertiaApp({
@@ -27,7 +27,7 @@ createInertiaApp({
     const root = createRoot(el);
 
     root.render(
-      <MantineProvider theme={theme}>
+      <MantineProvider theme={theme} defaultColorScheme='dark'>
         <App {...props} />
       </MantineProvider>
     );
