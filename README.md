@@ -15,9 +15,6 @@ php artisan passport:keys
 npm install && npm run build
 ```
 
-### Quick hack
-Replace `vendor/laravel/passport/src/Http/Controllers/AuthorizationController.php` with [this AuthorizationController](https://gist.github.com/marcorentap/740046418fa270146ab0302b7067843b).
-
 ---
 
 Setup sail's docker environment and choose a database service.
