@@ -1,4 +1,4 @@
-import { Anchor, Button, Card, Center, Checkbox, Container, Image, MantineProvider, PasswordInput, Space, Stack, TextInput, Title } from '@mantine/core';
+import { Alert, Anchor, Button, Card, Center, Checkbox, Container, Image, MantineProvider, PasswordInput, Space, Stack, TextInput, Title } from '@mantine/core';
 import { Head, Link, router } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 import LegoomIDLogo from '../../images/LegoomID.svg';
@@ -6,7 +6,15 @@ import { useViewportSize } from '@mantine/hooks';
 import { Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-export default function Login() {
+interface PageProps {
+  status: string
+  errors: {
+    email: string
+  }
+}
+
+export default function Login(props: PageProps) {
+  let { status, errors } = props;
   const { height, width } = useViewportSize();
   const form = useForm({
     initialValues: {
@@ -34,6 +42,8 @@ export default function Login() {
           <Center>
             <Title ta="center"> Sign in with Legoom ID</Title>
           </Center>
+          {status && <Alert>{status}</Alert>}
+          {errors.email && <Alert color='red'>{errors.email}</Alert>}
           <form onSubmit={form.onSubmit(submit)}>
             <Stack>
               <TextInput label="Email" key={form.key("email")} {...form.getInputProps("email")} />
