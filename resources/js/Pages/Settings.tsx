@@ -40,7 +40,7 @@ export default function Account(props: SettingsProps): ReactNode {
       </AppShell.Header>
       <AppShell.Main>
         <Center>
-          <Group w={1200} px="md" justify="flex-start" wrap="nowrap" align="start">
+          <Group w={1200} px="md" justify="flex-start" wrap="nowrap" align="start" gap="xl">
             <Stack w={200} visibleFrom="md" justify="flex-start" gap="0">
               <NavLink label="Account" fw={700} active={hash == "#Account"} onClick={() => setHash("Account")} />
               <NavLink label="Profile" fw={700} active={hash == "#Profile"} onClick={() => setHash("Profile")} />
