@@ -20,7 +20,7 @@ Route::get('/', function (Request $request) {
 })->name("homepage");
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return to_route("homepage");
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/oauth/authorize',
