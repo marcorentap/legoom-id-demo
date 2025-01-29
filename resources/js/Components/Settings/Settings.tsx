@@ -27,6 +27,7 @@ export interface SettingsProps {
     socialUrl: string
     membership: string,
     paymentCard: string,
+    avatar: string,
   }
 }
 

@@ -1,4 +1,4 @@
-import { Text, Title, Stack, ModalProps, Modal, TextInput, Button } from "@mantine/core";
+import { Text, Title, Stack, ModalProps, Modal, TextInput, Button, Group, Avatar, Anchor, FileInput, StyleProp, MantineColor } from "@mantine/core";
 import { ReactNode } from "react";
 import { SettingsProps, SettingItem, createModalControls } from "./Settings";
 
@@ -44,19 +44,65 @@ function SocialForm(props: ModalProps & SettingsProps): ReactNode {
   )
 }
 
+function ProfilePictureForm(props: ModalProps & SettingsProps): ReactNode {
+  return (
+    <Modal {...props} >
+      <form>
+        <Stack>
+          <FileInput label="Upload file" accept="image/png,image/jpeg" clearable />
+          <Button>Confirm</Button>
+        </Stack>
+      </form>
+    </Modal>
+  )
+}
+
+interface ProfilePictureSettingsProps {
+  title: string,
+  action: {
+    text: string,
+    color: StyleProp<MantineColor>
+    onClick: () => void
+  }
+  avatar: string,
+}
+
+export function ProfilePictureItem(props: ProfilePictureSettingsProps): ReactNode {
+  let { title, action, avatar } = props;
+  return (
+    <Group justify="flex-start">
+      <Avatar src={props.avatar} size="xl" />
+      <Stack justify="flex-start" gap="xs">
+        <Text fw={700} size="md">{title}</Text>
+        <Anchor onClick={action.onClick} c={action.color}>{action.text}</Anchor>
+      </Stack>
+    </Group>
+  );
+}
+
 export default function ProfileSettings(props: SettingsProps): ReactNode {
   let nameModalControls = createModalControls();
   let displayNameModalControls = createModalControls();
   let socialModalControls = createModalControls();
+  let profilePictureModalControls = createModalControls();
 
   return (
     <>
       <NameForm opened={nameModalControls.opened} onClose={nameModalControls.close} {...props} />
       <DisplayNameForm opened={displayNameModalControls.opened} onClose={displayNameModalControls.close} {...props} />
       <SocialForm opened={socialModalControls.opened} onClose={socialModalControls.close} {...props} />
+      <ProfilePictureForm opened={profilePictureModalControls.opened} onClose={profilePictureModalControls.close} {...props} />
 
       <Stack flex="1" align="stretch" justify="flex-start" gap="xl">
         <Title>Profile</Title>
+        <ProfilePictureItem
+          title="Profile Picture"
+          avatar={props.user.avatar}
+          action={{
+            text: "Upload Picture",
+            color: "blue",
+            onClick: profilePictureModalControls.open
+          }} />
         <SettingItem
           title="Name"
           description="Your full name."
