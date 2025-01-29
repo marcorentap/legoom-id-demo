@@ -53,7 +53,7 @@ export default function Register(props: PageProps) {
               <TextInput label="Name" key={form.key("name")} {...form.getInputProps("name")} />
               <TextInput label="Email" key={form.key("email")} {...form.getInputProps("email")} />
               <PasswordInput label="Password" key={form.key("password")} {...form.getInputProps("password")} />
-              <PasswordInput label="Password" key={form.key("password_confirmation")} {...form.getInputProps("password_confirmation")} />
+              <PasswordInput label="Confirm Password" key={form.key("password_confirmation")} {...form.getInputProps("password_confirmation")} />
               <Button type="submit">Sign up</Button>
               <Space />
               <Text size="xs">Already have an account? <Anchor href={route("login")}>Sign in</Anchor></Text>
