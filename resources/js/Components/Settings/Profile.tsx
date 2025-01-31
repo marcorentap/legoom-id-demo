@@ -1,15 +1,28 @@
 import { Text, Title, Stack, ModalProps, Modal, TextInput, Button, Group, Avatar, Anchor, FileInput, StyleProp, MantineColor } from "@mantine/core";
 import { ReactNode } from "react";
 import { SettingsProps, SettingItem, createModalControls } from "./Settings";
+import { useForm } from "@mantine/form";
+import { router } from "@inertiajs/react";
 
 function NameForm(props: ModalProps & SettingsProps): ReactNode {
+
+  let form = useForm({
+    initialValues: {
+      name: props.user.name
+    }
+  });
+
+  function submit() {
+    router.patch(route("profile.update"), form.values);
+  }
+
   return (
     <Modal {...props} >
-      <form>
+      <form onSubmit={form.onSubmit(submit)}>
         <Stack>
           <TextInput label="Current name" placeholder={props.user.name} disabled />
-          <TextInput label="New name" />
-          <Button>Confirm</Button>
+          <TextInput label="New name" key={form.key("name")} {...form.getInputProps("name")} />
+          <Button type="submit">Confirm</Button>
         </Stack>
       </form>
     </Modal>
@@ -17,13 +30,23 @@ function NameForm(props: ModalProps & SettingsProps): ReactNode {
 }
 
 function DisplayNameForm(props: ModalProps & SettingsProps): ReactNode {
+  let form = useForm({
+    initialValues: {
+      display_name: props.profile.displayName
+    }
+  });
+
+  function submit() {
+    router.patch(route("profile.update"), form.values);
+  }
+
   return (
     <Modal {...props} >
-      <form>
+      <form onSubmit={form.onSubmit(submit)}>
         <Stack>
-          <TextInput label="Current display name" placeholder={props.user.displayName} disabled />
-          <TextInput label="New display name" />
-          <Button>Confirm</Button>
+          <TextInput label="Current display name" placeholder={props.profile.displayName} disabled />
+          <TextInput label="New display name" key={form.key("display_name")} {...form.getInputProps("display_name")} />
+          <Button type="submit">Confirm</Button>
         </Stack>
       </form>
     </Modal>
@@ -31,13 +54,23 @@ function DisplayNameForm(props: ModalProps & SettingsProps): ReactNode {
 }
 
 function SocialForm(props: ModalProps & SettingsProps): ReactNode {
+  let form = useForm({
+    initialValues: {
+      social_url: props.profile.socialUrl
+    }
+  });
+
+  function submit() {
+    router.patch(route("profile.update"), form.values);
+  }
+
   return (
     <Modal {...props} >
-      <form>
+      <form onSubmit={form.onSubmit(submit)}>
         <Stack>
-          <TextInput label="Current social URL" placeholder={props.user.socialUrl} disabled />
-          <TextInput label="New social URL" />
-          <Button>Confirm</Button>
+          <TextInput label="Current social URL" placeholder={props.profile.socialUrl} disabled />
+          <TextInput label="New social URL" key={form.key("social_url")} {...form.getInputProps("social_url")}/>
+          <Button type="submit">Confirm</Button>
         </Stack>
       </form>
     </Modal>
@@ -97,7 +130,7 @@ export default function ProfileSettings(props: SettingsProps): ReactNode {
         <Title>Profile</Title>
         <ProfilePictureItem
           title="Profile Picture"
-          avatar={props.user.avatar}
+          avatar={props.profile.avatar}
           action={{
             text: "Upload Picture",
             color: "blue",
@@ -115,7 +148,7 @@ export default function ProfileSettings(props: SettingsProps): ReactNode {
         <SettingItem
           title="Display Name"
           description="The name to be displayed on your profile."
-          peek=<Text>{props.user.displayName}</Text>
+          peek=<Text>{props.profile.displayName}</Text>
           action={{
             text: "Edit",
             color: "blue",
@@ -124,7 +157,7 @@ export default function ProfileSettings(props: SettingsProps): ReactNode {
         <SettingItem
           title="Social URL"
           description="The social media account to be displayed on your profile."
-          peek=<Text>{props.user.socialUrl}</Text>
+          peek=<Text>{props.profile.socialUrl}</Text>
           action={{
             text: "Edit",
             color: "blue",

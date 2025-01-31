@@ -1,15 +1,27 @@
 import { Text, Title, Stack, Button, Modal, ModalProps, TextInput, PasswordInput } from "@mantine/core";
 import { ReactNode } from "react";
 import { SettingsProps, SettingItem, createModalControls } from "./Settings";
+import { useForm } from "@mantine/form";
+import { router } from "@inertiajs/react";
 
 function EmailForm(props: ModalProps & SettingsProps): ReactNode {
+  let form = useForm({
+    initialValues: {
+      email: props.user.email
+    }
+  });
+
+  function submit() {
+    router.patch(route("account.update"), form.values);
+  }
+
   return (
     <Modal {...props} >
-      <form>
+      <form onSubmit={form.onSubmit(submit)}>
         <Stack>
           <TextInput label="Current Email" placeholder={props.user.email} disabled />
-          <TextInput label="New Email" />
-          <Button>Confirm</Button>
+          <TextInput label="New Email" key={form.key("email")} {...form.getInputProps("email")} />
+          <Button type="submit">Confirm</Button>
         </Stack>
       </form>
     </Modal>
@@ -17,14 +29,25 @@ function EmailForm(props: ModalProps & SettingsProps): ReactNode {
 }
 
 function PasswordForm(props: ModalProps & SettingsProps): ReactNode {
+  let form = useForm({
+    initialValues: {
+      password: "",
+      password_confirmation: ""
+    }
+  });
+
+  function submit() {
+    router.patch(route("account.update"), form.values);
+  }
+
   return (
     <Modal {...props} >
-      <form>
+      <form onSubmit={form.onSubmit(submit)}>
         <Stack>
-          <PasswordInput label="Current Password" />
-          <PasswordInput label="New Password" />
-          <PasswordInput label="Confirm New Password" />
-          <Button>Confirm</Button>
+          <PasswordInput label="Current Password" disabled />
+          <PasswordInput label="New Password" key={form.key("password")} {...form.getInputProps("password")} />
+          <PasswordInput label="Confirm New Password" key={form.key("password_confirmation")} {...form.getInputProps("password_confirmation")} />
+          <Button type="submit">Confirm</Button>
         </Stack>
       </form>
     </Modal>
@@ -32,12 +55,18 @@ function PasswordForm(props: ModalProps & SettingsProps): ReactNode {
 }
 
 function DeleteForm(props: ModalProps & SettingsProps): ReactNode {
+  let form = useForm({
+  });
+
+  function submit() {
+    router.delete(route("account.delete"));
+  }
   return (
     <Modal {...props} >
-      <form>
+      <form onSubmit={form.onSubmit(submit)}>
         <Stack>
           <Text>Are you sure? You will lose access to all Legoom apps.</Text>
-          <Button color="red">Confirm</Button>
+          <Button type="submit" color="red">Confirm</Button>
         </Stack>
       </form>
     </Modal>

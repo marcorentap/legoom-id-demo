@@ -23,10 +23,13 @@ export interface SettingsProps {
     id: string,
     name: string,
     email: string
-    displayName: string,
-    socialUrl: string
     membership: string,
     paymentCard: string,
+  }
+
+  profile: {
+    displayName: string,
+    socialUrl: string
     avatar: string,
   }
 }
