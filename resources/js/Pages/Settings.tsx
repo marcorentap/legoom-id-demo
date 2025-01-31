@@ -1,4 +1,4 @@
-import { Text, AppShell, Group, Image, Center, NavLink, Stack, Anchor } from "@mantine/core";
+import { Text, AppShell, Group, Image, Center, NavLink, Stack, Anchor, Space } from "@mantine/core";
 import { Head, Link } from "@inertiajs/react";
 import LegoomIDLogo from "../../images/LegoomID.svg";
 import { ReactNode, useState } from "react";
@@ -41,10 +41,10 @@ export default function Account(props: SettingsProps): ReactNode {
       </AppShell.Header>
       <AppShell.Main>
         <Center>
-          <Group w={1200} px="md" justify="flex-start" wrap="nowrap" align="start" gap="xl">
+          <Group w={1200} px="md" visibleFrom="md" justify="flex-start" wrap="nowrap" align="start" gap="xl">
             <Stack w={200} visibleFrom="md" justify="flex-start" gap="0">
               {navigationItems.map(item => (
-                <NavLink label={item} fw={700} active={hash == "#".concat(item)} onClick={() => setHash(item)} styles={{ root: { borderRadius: 20} }} />
+                <NavLink label={item} fw={700} active={hash == "#".concat(item)} onClick={() => setHash(item)} styles={{ root: { borderRadius: 20 } }} />
               ))}
             </Stack>
 
@@ -52,6 +52,13 @@ export default function Account(props: SettingsProps): ReactNode {
             {hash == '#Profile' && <ProfileSettings {...props} />}
             {hash == '#Membership' && <MembershipSettings {...props} />}
           </Group>
+
+          <Stack w={1200} px="md" hiddenFrom="md" justify="flex-start" align="start" gap="xl">
+            <AccountSettings {...props} />
+            <ProfileSettings {...props} />
+            <MembershipSettings {...props} />
+            <Space/>
+          </Stack>
         </Center>
       </AppShell.Main>
     </AppShell>
