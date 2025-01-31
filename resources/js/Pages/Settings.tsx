@@ -11,6 +11,7 @@ import { useHash } from "@mantine/hooks";
 export default function Account(props: SettingsProps): ReactNode {
 
   const [hash, setHash] = useHash({ getInitialValueInEffect: false });
+  const navigationItems = ["Account", "Profile", "Membership"]
 
   if (!hash) {
     setHash("Account");
@@ -42,9 +43,9 @@ export default function Account(props: SettingsProps): ReactNode {
         <Center>
           <Group w={1200} px="md" justify="flex-start" wrap="nowrap" align="start" gap="xl">
             <Stack w={200} visibleFrom="md" justify="flex-start" gap="0">
-              <NavLink label="Account" fw={700} active={hash == "#Account"} onClick={() => setHash("Account")} />
-              <NavLink label="Profile" fw={700} active={hash == "#Profile"} onClick={() => setHash("Profile")} />
-              <NavLink label="Membership" fw={700} active={hash == "#Membership"} onClick={() => setHash("Membership")} />
+              {navigationItems.map(item => (
+                <NavLink label={item} fw={700} active={hash == "#".concat(item)} onClick={() => setHash(item)} styles={{ root: { borderRadius: 20} }} />
+              ))}
             </Stack>
 
             {hash == '#Account' && <AccountSettings {...props} />}
