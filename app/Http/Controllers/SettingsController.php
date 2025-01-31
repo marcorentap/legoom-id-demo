@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
@@ -24,8 +25,7 @@ class SettingsController extends Controller
             'profile' => [
                 'displayName' => $profile->display_name,
                 'socialUrl' => $profile->social_url,
-                'avatar' => 'https://catsoftheweb.com/wp-content/uploads/2024/09/panko.jpg'
-                // 'avatar' => $profile->avatar,
+                'avatar' => Storage::url($profile->avatar)
             ]
         ]);
     }

@@ -1,8 +1,9 @@
 import { Text, Title, Stack, ModalProps, Modal, TextInput, Button, Group, Avatar, Anchor, FileInput, StyleProp, MantineColor } from "@mantine/core";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { SettingsProps, SettingItem, createModalControls } from "./Settings";
 import { useForm } from "@mantine/form";
 import { router } from "@inertiajs/react";
+import { IconUserScan } from '@tabler/icons-react';
 
 function NameForm(props: ModalProps & SettingsProps): ReactNode {
 
@@ -69,7 +70,7 @@ function SocialForm(props: ModalProps & SettingsProps): ReactNode {
       <form onSubmit={form.onSubmit(submit)}>
         <Stack>
           <TextInput label="Current social URL" placeholder={props.profile.socialUrl} disabled />
-          <TextInput label="New social URL" key={form.key("social_url")} {...form.getInputProps("social_url")}/>
+          <TextInput label="New social URL" key={form.key("social_url")} {...form.getInputProps("social_url")} />
           <Button type="submit">Confirm</Button>
         </Stack>
       </form>
@@ -78,12 +79,29 @@ function SocialForm(props: ModalProps & SettingsProps): ReactNode {
 }
 
 function ProfilePictureForm(props: ModalProps & SettingsProps): ReactNode {
+  let form = useForm({
+    initialValues: {
+      avatar_file: null as File | null
+    }
+  });
+
+  function submit() {
+    console.log(form.values);
+    router.post(route("profile.picture"), form.values, {forceFormData: true});
+  }
+
   return (
     <Modal {...props} >
-      <form>
+      <form onSubmit={form.onSubmit(submit)}>
         <Stack>
-          <FileInput label="Upload file" accept="image/png,image/jpeg" clearable />
-          <Button>Confirm</Button>
+          <FileInput key={form.key("avatar_file")}
+            label="Upload picture"
+            accept="image/png,image/jpeg"
+            placeholder="Upload picture..."
+            leftSection={<IconUserScan />}
+            clearable
+            {...form.getInputProps("avatar_file")} />
+          <Button type="submit">Confirm</Button>
         </Stack>
       </form>
     </Modal>
