@@ -41,8 +41,8 @@ export default function Account(props: SettingsProps): ReactNode {
       </AppShell.Header>
       <AppShell.Main>
         <Center>
-          <Group w={1200} px="md" visibleFrom="md" justify="flex-start" wrap="nowrap" align="start" gap="xl">
-            <Stack w={200} visibleFrom="md" justify="flex-start" gap="0">
+          <Group w={1200} px="md" visibleFrom="sm" justify="flex-start" wrap="nowrap" align="start" gap="xl">
+            <Stack w={200} justify="flex-start" gap="0">
               {navigationItems.map(item => (
                 <NavLink label={item} fw={700} active={hash == "#".concat(item)} onClick={() => setHash(item)} styles={{ root: { borderRadius: 20 } }} />
               ))}
@@ -53,7 +53,7 @@ export default function Account(props: SettingsProps): ReactNode {
             {hash == '#Membership' && <MembershipSettings {...props} />}
           </Group>
 
-          <Stack w={1200} px="md" hiddenFrom="md" justify="flex-start" align="start" gap="xl">
+          <Stack w={1200} px="sm" hiddenFrom="sm" justify="flex-start" align="start" gap="xl">
             <AccountSettings {...props} />
             <ProfileSettings {...props} />
             <MembershipSettings {...props} />
