@@ -41,8 +41,12 @@ class ProfileController extends Controller
         $file = $request->file('avatar_file');
         $avatar = $file->storePublicly('profile-pictures', 's3');
 
-        $profile->avatar = $avatar;
-        $profile->save();
+        if ($avatar) {
+            $profile->avatar = $avatar;
+            $profile->save();
+        } else {
+            error_log("Cannot store profile picture");
+        }
 
         return to_route("settings");
     }
