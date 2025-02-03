@@ -13,7 +13,7 @@ class SettingsController extends Controller
     {
         $user = $request->user();
         $profile = $user->profile;
-        $avatar = $profile->avatar ? Storage::url($user->profile->avatar) : null;
+        $avatar = $profile->avatar;
 
         return Inertia::render('Settings', [
             'user' => [

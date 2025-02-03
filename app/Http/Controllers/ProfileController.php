@@ -69,7 +69,7 @@ class ProfileController extends Controller
 
         $avatar = $file->storePublicly('profile-pictures', 's3');
         if ($avatar) {
-            $profile->avatar = $avatar;
+            $profile->avatar = Storage::url($avatar);
             $profile->save();
         } else {
             error_log("Cannot store profile picture");
