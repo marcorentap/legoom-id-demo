@@ -48,7 +48,8 @@ class ProfileController extends Controller
         $validator = Validator::make(
             $request->all(),
             ['avatar_file' => 'required|image'],
-            ['avatar_file' => 'No file selected.']);
+            ['avatar_file' => 'No file selected.']
+        );
         if ($validator->fails()) {
             return to_route("settings")->withErrors($validator);
         }
@@ -60,6 +61,10 @@ class ProfileController extends Controller
         $cur_avatar = $profile->avatar;
         if ($cur_avatar && Storage::exists($cur_avatar)) {
             Storage::delete($cur_avatar);
+        }
+
+        if (!Storage::directoryExists('profile-pictures')) {
+            Storage::makeDirectory('profile-pictures');
         }
 
         $avatar = $file->storePublicly('profile-pictures', 's3');
