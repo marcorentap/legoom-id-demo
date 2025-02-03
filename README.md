@@ -15,14 +15,10 @@ php artisan passport:keys
 npm install && npm run build
 ```
 
----
-
-Setup sail's docker environment and choose a database service. Note that Legoom ID uses S3 as the storage service. You may install `MinIO` through Sail, or use [other S3-compatible services](https://laravel.com/docs/11.x/filesystem#amazon-s3-compatible-filesystems).
-```bash
-php artisan sail:install
+Legoom ID demo uses Postgres and AWS S3 (through MinIO) so make sure to set up the environment in `.env` and start Sail docker containers
+```
 ./vendor/bin/sail up
 ```
-then set up S3 environment in `.env`
 
 In another terminal, run
 ```
