@@ -35,6 +35,7 @@ export interface SettingsProps {
   errors: {
     email: string
     password: string
+    current_password: string
     avatar_file: string
     social_url: string
   }

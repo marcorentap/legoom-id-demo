@@ -32,6 +32,7 @@ function EmailForm(props: ModalProps & SettingsProps): ReactNode {
 function PasswordForm(props: ModalProps & SettingsProps): ReactNode {
   let form = useForm({
     initialValues: {
+      current_password: "",
       password: "",
       password_confirmation: ""
     }
@@ -45,8 +46,9 @@ function PasswordForm(props: ModalProps & SettingsProps): ReactNode {
     <Modal {...props} >
       <form onSubmit={form.onSubmit(submit)}>
         <Stack>
+          {props.errors.current_password && <Alert color='red'>{props.errors.current_password}</Alert>}
           {props.errors.password && <Alert color='red'>{props.errors.password}</Alert>}
-          <PasswordInput label="Current Password" disabled />
+          <PasswordInput label="Current Password" key={form.key("current_password")} {...form.getInputProps("current_password")}/>
           <PasswordInput label="New Password" key={form.key("password")} {...form.getInputProps("password")} />
           <PasswordInput label="Confirm New Password" key={form.key("password_confirmation")} {...form.getInputProps("password_confirmation")} />
           <Button type="submit">Confirm</Button>

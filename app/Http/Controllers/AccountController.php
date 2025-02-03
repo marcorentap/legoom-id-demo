@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
@@ -17,11 +18,20 @@ class AccountController extends Controller
      */
     public function update(Request $request)
     {
-        $validated = $request->validate([
-            'email' => ['string', 'max:255', 'email:dns,strict', 'unique:' . User::class],
-            'password' => ['max:255', 'min:8', 'confirmed', Rules\Password::defaults()]
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'email' => ['string', 'max:255', 'email:dns,strict', 'unique:' . User::class],
+                'password' => ['max:255', 'min:8', 'confirmed', Rules\Password::defaults()],
+                'current_password' => ['current_password']
+            ],
+            ['current_password' => 'Current password is incorrect']
+        );
 
+        if ($validator->fails()) {
+            return to_route("settings")->withErrors($validator);
+        }
+        $validated = $validator->validated();
         $user = $request->user();
         $user->fill($validated);
         $user->save();
