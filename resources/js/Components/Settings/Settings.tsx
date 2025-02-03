@@ -32,6 +32,11 @@ export interface SettingsProps {
     socialUrl: string
     avatar: string,
   }
+
+  errors: {
+    email: string
+    password: string
+  }
 }
 
 interface ModalControls {

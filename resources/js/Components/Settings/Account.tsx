@@ -1,4 +1,4 @@
-import { Text, Title, Stack, Button, Modal, ModalProps, TextInput, PasswordInput } from "@mantine/core";
+import { Text, Title, Stack, Button, Modal, ModalProps, TextInput, PasswordInput, Alert } from "@mantine/core";
 import { ReactNode } from "react";
 import { SettingsProps, SettingItem, createModalControls } from "./Settings";
 import { useForm } from "@mantine/form";
@@ -19,6 +19,7 @@ function EmailForm(props: ModalProps & SettingsProps): ReactNode {
     <Modal {...props} >
       <form onSubmit={form.onSubmit(submit)}>
         <Stack>
+          {props.errors.email && <Alert color='red'>{props.errors.email}</Alert>}
           <TextInput label="Current Email" placeholder={props.user.email} disabled />
           <TextInput label="New Email" key={form.key("email")} {...form.getInputProps("email")} />
           <Button type="submit">Confirm</Button>
@@ -44,6 +45,7 @@ function PasswordForm(props: ModalProps & SettingsProps): ReactNode {
     <Modal {...props} >
       <form onSubmit={form.onSubmit(submit)}>
         <Stack>
+          {props.errors.password && <Alert color='red'>{props.errors.password}</Alert>}
           <PasswordInput label="Current Password" disabled />
           <PasswordInput label="New Password" key={form.key("password")} {...form.getInputProps("password")} />
           <PasswordInput label="Confirm New Password" key={form.key("password_confirmation")} {...form.getInputProps("password_confirmation")} />
