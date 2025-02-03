@@ -13,20 +13,18 @@ class SettingsController extends Controller
     {
         $user = $request->user();
         $profile = $user->profile;
-        $avatar = $profile->avatar;
 
         return Inertia::render('Settings', [
             'user' => [
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'membership' => 'Insider',
-                'paymentCard' => 'VISA *1337',
             ],
             'profile' => [
                 'displayName' => $profile->display_name,
                 'socialUrl' => $profile->social_url,
-                'avatar' => $avatar
+                'avatar' => $profile->avatar,
+                'membership' => $profile->membership->name
             ]
         ]);
     }
