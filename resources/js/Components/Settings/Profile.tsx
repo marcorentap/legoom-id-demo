@@ -1,4 +1,4 @@
-import { Text, Title, Stack, ModalProps, Modal, TextInput, Button, Group, Avatar, Anchor, FileInput, StyleProp, MantineColor } from "@mantine/core";
+import { Text, Title, Stack, ModalProps, Modal, TextInput, Button, Group, Avatar, Anchor, FileInput, StyleProp, MantineColor, Alert } from "@mantine/core";
 import { ReactNode, useState } from "react";
 import { SettingsProps, SettingItem, createModalControls } from "./Settings";
 import { useForm } from "@mantine/form";
@@ -69,6 +69,7 @@ function SocialForm(props: ModalProps & SettingsProps): ReactNode {
     <Modal {...props} >
       <form onSubmit={form.onSubmit(submit)}>
         <Stack>
+          {props.errors.social_url && <Alert color='red'>{props.errors.social_url}</Alert>}
           <TextInput label="Current social URL" placeholder={props.profile.socialUrl} disabled />
           <TextInput label="New social URL" key={form.key("social_url")} {...form.getInputProps("social_url")} />
           <Button type="submit">Confirm</Button>
@@ -87,13 +88,14 @@ function ProfilePictureForm(props: ModalProps & SettingsProps): ReactNode {
 
   function submit() {
     console.log(form.values);
-    router.post(route("profile.picture"), form.values, {forceFormData: true});
+    router.post(route("profile.picture"), form.values, { forceFormData: true });
   }
 
   return (
     <Modal {...props} >
       <form onSubmit={form.onSubmit(submit)}>
         <Stack>
+          {props.errors.avatar_file && <Alert color='red'>{props.errors.avatar_file}</Alert>}
           <FileInput key={form.key("avatar_file")}
             label="Upload picture"
             accept="image/png,image/jpeg"

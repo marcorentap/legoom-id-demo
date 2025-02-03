@@ -7,6 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules;
 
 class ProfileController extends Controller
 {
@@ -15,17 +17,26 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-        $inputs = $request->input();
+        $validator = Validator::make($request->all(), [
+            'name' => 'string|max:255',
+            'display_name' => 'string|max:255',
+            'social_url' => 'url:http,https'
+        ]);
+
+        if ($validator->fails()) {
+            return to_route("settings")->withErrors($validator);
+        }
+
+        $validated = $validator->validated();
 
         if ($request->has('name')) {
-            $request->user()->name = $inputs['name'];
+            $request->user()->name = $validated['name'];
             $request->user()->save();
         }
 
         $profile = $request->user()->profile;
-        $profile->fill($inputs);
+        $profile->fill($validated);
         $profile->save();
-
         return to_route("settings");
     }
 
@@ -33,14 +44,25 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $profile = $user->profile;
+
+        $validator = Validator::make(
+            $request->all(),
+            ['avatar_file' => 'required|image'],
+            ['avatar_file' => 'No file selected.']);
+        if ($validator->fails()) {
+            return to_route("settings")->withErrors($validator);
+        }
+
+
+        $validated = $validator->validated();
+        $file = $validated['avatar_file'];
+
         $cur_avatar = $profile->avatar;
         if ($cur_avatar && Storage::exists($cur_avatar)) {
             Storage::delete($cur_avatar);
         }
 
-        $file = $request->file('avatar_file');
         $avatar = $file->storePublicly('profile-pictures', 's3');
-
         if ($avatar) {
             $profile->avatar = $avatar;
             $profile->save();
