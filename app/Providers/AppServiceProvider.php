@@ -30,10 +30,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
         Passport::tokensCan([
-            'read-personal-info' => 'Read personal information',
-            'write-personal-info' => 'Read and modify personal information',
-            'read-membership-info' => 'Read membership information',
-            'write-membership -info' => 'Read and modify personal information',
+            'read-profile' => 'Read profile information',
+            'write-profile' => 'Read and modify profile information',
+            'read-account' => 'Read account information',
+            'write-account' => 'Read and modify account information',
         ]);
     }
 }
