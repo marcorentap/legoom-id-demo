@@ -7,7 +7,7 @@ import { router } from "@inertiajs/react";
 function EmailForm(props: ModalProps & SettingsProps): ReactNode {
   let form = useForm({
     initialValues: {
-      email: props.user.email
+      email: props.account.email
     }
   });
 
@@ -20,7 +20,7 @@ function EmailForm(props: ModalProps & SettingsProps): ReactNode {
       <form onSubmit={form.onSubmit(submit)}>
         <Stack>
           {props.errors.email && <Alert color='red'>{props.errors.email}</Alert>}
-          <TextInput label="Current Email" placeholder={props.user.email} disabled />
+          <TextInput label="Current Email" placeholder={props.account.email} disabled />
           <TextInput label="New Email" key={form.key("email")} {...form.getInputProps("email")} />
           <Button type="submit">Confirm</Button>
         </Stack>
@@ -93,12 +93,12 @@ export default function AccountSettings(props: SettingsProps): ReactNode {
         <SettingItem
           title="Account ID"
           description="Your Legoom account identifier."
-          peek=<Text>{props.user.id}</Text>
+          peek=<Text>{props.account.id}</Text>
         />
         <SettingItem
           title="Email Address"
           description="The email address associated with your account."
-          peek=<Text>{props.user.email}</Text>
+          peek=<Text>{props.account.email}</Text>
           action={{
             text: "Edit",
             color: "blue",

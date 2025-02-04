@@ -9,7 +9,7 @@ function NameForm(props: ModalProps & SettingsProps): ReactNode {
 
   let form = useForm({
     initialValues: {
-      name: props.user.name
+      name: props.account.name
     }
   });
 
@@ -21,7 +21,7 @@ function NameForm(props: ModalProps & SettingsProps): ReactNode {
     <Modal {...props} >
       <form onSubmit={form.onSubmit(submit)}>
         <Stack>
-          <TextInput label="Current name" placeholder={props.user.name} disabled />
+          <TextInput label="Current name" placeholder={props.account.name} disabled />
           <TextInput label="New name" key={form.key("name")} {...form.getInputProps("name")} />
           <Button type="submit">Confirm</Button>
         </Stack>
@@ -159,7 +159,7 @@ export default function ProfileSettings(props: SettingsProps): ReactNode {
         <SettingItem
           title="Name"
           description="Your full name."
-          peek=<Text>{props.user.name}</Text>
+          peek=<Text>{props.account.name}</Text>
           action={{
             text: "Edit",
             color: "blue",

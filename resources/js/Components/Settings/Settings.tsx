@@ -5,6 +5,7 @@ import AccountSettings from "@/Components/Settings/Account";
 import ProfileSettings from "@/Components/Settings/Profile";
 import MembershipSettings from "@/Components/Settings/Membership";
 import { useDisclosure } from "@mantine/hooks";
+import { UserAccount, UserProfile } from "@/Types/LegoomID";
 
 export interface SettingItemProps {
   title: string,
@@ -19,18 +20,8 @@ export interface SettingItemProps {
 }
 
 export interface SettingsProps {
-  user: {
-    id: string,
-    name: string,
-    email: string
-  }
-
-  profile: {
-    displayName: string,
-    socialUrl: string
-    avatar: string,
-    membership: string,
-  }
+  account: UserAccount;
+  profile: UserProfile;
 
   errors: {
     email: string

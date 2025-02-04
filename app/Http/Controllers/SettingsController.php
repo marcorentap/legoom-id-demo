@@ -15,7 +15,7 @@ class SettingsController extends Controller
         $profile = $user->profile;
 
         return Inertia::render('Settings', [
-            'user' => [
+            'account' => [
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
