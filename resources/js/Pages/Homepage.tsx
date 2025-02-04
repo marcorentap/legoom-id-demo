@@ -1,13 +1,16 @@
 import { Text, AppShell, Group, Image, Card, Title, Center, Anchor, Container } from "@mantine/core";
 import LegoomIDLogo from "../../images/LegoomID.svg";
 import { Head, Link } from "@inertiajs/react";
+import ProfileCard from "@/Components/ProfileCard";
+import { UserProfile } from "@/Types/LegoomID";
+import { useViewportSize } from "@mantine/hooks";
 interface PageProps {
-  user_id: string
-  user_name: string
+  profile: UserProfile
 }
 
 export default function Homepage(props: PageProps) {
-  const { user_id, user_name } = props;
+  let { height, width } = useViewportSize();
+  height = height - 60
   return (
     <>
       <Head title="Home" >
@@ -32,11 +35,8 @@ export default function Homepage(props: PageProps) {
           </Center>
         </AppShell.Header>
         <AppShell.Main>
-          <Center>
-            <Card>
-              <Text>Welcome back</Text>
-              <Title >{user_name}</Title>
-            </Card>
+          <Center h={height} w={width}>
+            <ProfileCard profile={props.profile} />
           </Center>
         </AppShell.Main>
       </AppShell>

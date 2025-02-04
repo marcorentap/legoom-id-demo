@@ -11,9 +11,19 @@ use Inertia\Inertia;
 Route::get('/', function (Request $request) {
     $user = $request->user();
     if ($user) {
+        $profile = $user->profile;
         return Inertia::render('Homepage', [
-            "user_id" => $user->id,
-            "user_name" => $user->name
+            'account' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ],
+            'profile' => [
+                'displayName' => $profile->display_name,
+                'socialUrl' => $profile->social_url,
+                'avatar' => $profile->avatar,
+                'membership' => $profile->membership->name
+            ]
         ]);
     }
 
@@ -24,7 +34,8 @@ Route::get('/dashboard', function () {
     return to_route("homepage");
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/oauth/authorize',
+Route::get(
+    '/oauth/authorize',
     [AuthorizationController::class, 'authorize']
 );
 
