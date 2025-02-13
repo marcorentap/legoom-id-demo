@@ -8,6 +8,9 @@ interface ProfileCardProps {
 
 export default function ProfileCard(props: ProfileCardProps) {
   const { profile } = props;
+  if (profile.socialUrl == "" || profile.socialUrl == null) {
+    profile.socialUrl = "http://example.com"
+  }
   return (
     <Card withBorder={true} w={250} padding="lg">
       <Stack align="center" justify="flex-start" gap="sm">
