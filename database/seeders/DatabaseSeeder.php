@@ -3,9 +3,15 @@
 namespace Database\Seeders;
 
 use App\Models\Membership;
+use App\Models\Platform;
+use App\Models\PlatformSettings;
 use App\Models\User;
+use App\Models\UserMembership;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,7 +20,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        User::factory(100)->create();
         User::factory()->create([
             'name' => 'Marc Owen Rentap',
             'email' => 'marcorentap@gmail.com',
@@ -26,6 +32,25 @@ class DatabaseSeeder extends Seeder
         ]);
         Membership::factory()->create([
             'name' => 'Premium',
+        ]);
+
+        $users = DB::table('users')->pluck('id');
+        $memberships = DB::table('memberships')->pluck('id');
+
+        foreach ($users as $user_id) {
+            $userMembership = new UserMembership;
+            $userMembership->user_id = $user_id;
+            $userMembership->membership_id = fake()->randomElement($memberships);
+            $userMembership->save();
+        }
+
+        PlatformSettings::create([
+            'key' => 'name',
+            'value' => 'My Organization'
+        ]);
+        PlatformSettings::create([
+            'key' => 'logo',
+            'value' => 'public/logo.svg'
         ]);
     }
 }
