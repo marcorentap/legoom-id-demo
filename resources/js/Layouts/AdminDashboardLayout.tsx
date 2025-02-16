@@ -67,7 +67,7 @@ export default function AdminDashboardLayout(props: AdminDashboardLayoutProps) {
                     className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                   >
                     <Avatar className="h-8 w-8 rounded-lg">
-                      <CircleUser />
+                      <CircleUser className="m-auto" />
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-semibold">{user.name}</span>
@@ -81,7 +81,7 @@ export default function AdminDashboardLayout(props: AdminDashboardLayoutProps) {
                   align="end"
                   sideOffset={4}
                 >
-                  <Link href={route('logout')} method="post" className="w-full">
+                  <Link href="#" method="post" className="w-full">
                     <DropdownMenuItem className="cursor-pointer">
                       <UserRoundCog />
                       Account Settings
