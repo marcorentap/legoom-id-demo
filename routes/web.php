@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PassportOverride\AuthorizationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Foundation\Application;
@@ -29,6 +30,12 @@ Route::get('/dashboard', function (Request $request) {
 Route::get('/invalid', function () {
     return 'Invalid request';
 });
+
+Route::get(
+    '/oauth/authorize',
+    [AuthorizationController::class, 'authorize']
+);
+
 
 
 require __DIR__ . '/admin.php';
