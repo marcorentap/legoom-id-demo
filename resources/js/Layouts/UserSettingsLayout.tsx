@@ -5,10 +5,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { Avatar } from "@/components/ui/avatar";
 import { Head, Link, usePage } from "@inertiajs/react";
 import LegoomID from "@/../images/LegoomID.svg"
+import { AvatarImage } from "@radix-ui/react-avatar";
 
 export interface UserSettingsLayoutProps {
   organization_name: string
   organization_logo: string
+  profile_picture: string
   title: string
   children?: ReactNode
 }
@@ -42,7 +44,7 @@ export default function UserSettingsLayout(props: UserSettingsLayoutProps) {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <a href="#">
+                      <a href={route('user.settings.profile')}>
                         <CircleUser />
                         <span>Profile</span>
                       </a>
@@ -70,8 +72,8 @@ export default function UserSettingsLayout(props: UserSettingsLayoutProps) {
                       size="lg"
                       className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                     >
-                      <Avatar className="h-8 w-8 rounded-lg">
-                        <CircleUser className="m-auto" />
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={props.profile_picture} className="h-full w-full object-cover" />
                       </Avatar>
                       <div className="grid flex-1 text-left text-sm leading-tight">
                         <span className="truncate font-semibold">{user.name}</span>

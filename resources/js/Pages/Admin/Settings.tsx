@@ -34,7 +34,7 @@ export default function Settings(props: SettingsProps) {
 
   return (
     <>
-      <Head title="Platform Settings"/>
+      <Head title="Platform Settings" />
       <AdminDashboardLayout title='Settings'>
         <div className="max-w-xl">
           <Card className="p-5 mb-5">
@@ -91,8 +91,8 @@ export default function Settings(props: SettingsProps) {
           </Card>
           <div className="text-xl font-semibold mb-1">Preview</div>
           <div className="grid gap-5">
-            <LoginForm organization_name={orgName} organization_logo={orgLogo} />
-            <RegisterForm organization_name={orgName} organization_logo={orgLogo} />
+            <LoginForm organization_name={orgName} organization_logo={orgLogo} fake={true} />
+            <RegisterForm organization_name={orgName} organization_logo={orgLogo} fake={true} />
           </div>
         </div>
       </AdminDashboardLayout>

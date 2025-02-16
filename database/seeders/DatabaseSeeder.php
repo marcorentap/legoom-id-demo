@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Membership;
 use App\Models\Platform;
 use App\Models\PlatformSettings;
+use App\Models\Profile;
 use App\Models\User;
 use App\Models\UserMembership;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -39,14 +40,17 @@ class DatabaseSeeder extends Seeder
             'name' => 'Premium',
         ]);
 
-        $users = DB::table('users')->pluck('id');
         $memberships = DB::table('memberships')->pluck('id');
-
-        foreach ($users as $user_id) {
+        foreach (User::all() as $user) {
             $userMembership = new UserMembership;
-            $userMembership->user_id = $user_id;
+            $userMembership->user_id = $user->id;
             $userMembership->membership_id = fake()->randomElement($memberships);
             $userMembership->save();
+
+            $profile = new Profile;
+            $profile->user_id = $user->id;
+            $profile->display_name = $user->name;
+            $profile->save();
         }
 
         PlatformSettings::create([

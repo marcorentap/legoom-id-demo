@@ -13,6 +13,7 @@ export interface LoginFormProps {
     email: string
     password: string
   }
+  fake: boolean
 }
 
 export interface RegisterFormProps {
@@ -24,6 +25,7 @@ export interface RegisterFormProps {
     password: string
     password_confirmation: string
   }
+  fake: boolean
 }
 
 function handleLogin(e) {
@@ -50,7 +52,7 @@ export function LoginForm(props: LoginFormProps) {
       <CardContent>
         {emailError ? <div className="text-red-500 text-sm">{emailError}</div> : null}
         {passwordError ? <div className="text-red-500 text-sm">{passwordError}</div> : null}
-        <form onSubmit={form.handleSubmit(handleLogin)}>
+        <form onSubmit={props.fake ? form.handleSubmit(handleLogin) : () => { }}>
           <div className="flex flex-col gap-4">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
@@ -100,7 +102,7 @@ export function RegisterForm(props: RegisterFormProps) {
         {emailError ? <div className="text-red-500 text-sm">{emailError}</div> : null}
         {passwordError ? <div className="text-red-500 text-sm">{passwordError}</div> : null}
         {passwordConfirmationError ? <div className="text-red-500 text-sm">{passwordConfirmationError}</div> : null}
-        <form onSubmit={form.handleSubmit(handleRegister)}>
+        <form onSubmit={props.fake ? form.handleSubmit(handleRegister) : () => { }}>
           <div className="flex flex-col gap-4">
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
