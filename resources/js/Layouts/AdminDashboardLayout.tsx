@@ -38,7 +38,7 @@ export default function AdminDashboardLayout(props: AdminDashboardLayoutProps) {
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
-                    <a href="URL">
+                    <a href={route('admin.applications')}>
                       <LayoutGrid />
                       <span>Applications</span>
                     </a>

@@ -22,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+        Passport::tokensCan([
+            'read-profile' => 'Read profile information',
+            'read-account' => 'Read account information',
+        ]);
         // If enabled, plain-text secret is only visible once
         // Passport::hashClientSecrets();
     }

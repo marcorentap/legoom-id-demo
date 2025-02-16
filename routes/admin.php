@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ Route::get('/admin/dashboard', function (Request $request) {
 Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(function () {
     // Route::get('/admin/dashboard', redirect(route('admin.users')))->name('admin.dashboard');
     Route::get('/admin/users', [UserController::class, 'edit'])->name('admin.users');
-    // Route::get('/admin/applications', redirect(route('admin.users')))->name('admin.dashboard');
+    Route::get('/admin/applications', [ApplicationController::class, 'edit'])->name('admin.applications');
 });
 
 Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(function () {
