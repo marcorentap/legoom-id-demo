@@ -159,7 +159,8 @@ export function ProfileForm(props: ProfileFormProps) {
 
   const onSubmit = function(data, e) {
     let values = form.getValues()
-    let upload = { ...values, profile_picture: values.profile_picture[0] }
+    let profilePicture = values.profile_picture[0]
+    let upload = { ...values, profile_picture: profilePicture ? profilePicture : null }
     router.post(route('user.settings.profile'), upload)
   }
 
