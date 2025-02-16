@@ -201,7 +201,8 @@ export function ProfileForm(props: ProfileFormProps) {
                   type="file"
                   {...form.register('profile_picture', {
                     onChange: (e) => {
-                      const file = e.target.files?.[0];
+                      const file = e.target.files?.[0]
+                      setFilename(file.name)
                     }
                   })}
                   className="absolute inset-0 full h-full opacity-0 cursor-pointer"
