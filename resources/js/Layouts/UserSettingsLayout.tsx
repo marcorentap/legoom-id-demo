@@ -2,7 +2,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupConte
 import { PropsWithChildren, ReactNode } from "react";
 import { BadgeCheck, Bell, ChevronsUpDown, CircleUser, CreditCard, Fingerprint, LayoutGrid, LogOut, Settings, Sparkles, UserRoundCog, Users } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Avatar } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Head, Link, usePage } from "@inertiajs/react";
 import LegoomID from "@/../images/LegoomID.svg"
 import { AvatarImage } from "@radix-ui/react-avatar";
@@ -19,7 +19,7 @@ export default function UserSettingsLayout(props: UserSettingsLayoutProps) {
   const user = usePage().props.auth.user;
   return (
     <>
-      <Head title={props.title}/>
+      <Head title={props.title} />
       <SidebarProvider>
         <Sidebar>
           <SidebarHeader>
@@ -74,6 +74,7 @@ export default function UserSettingsLayout(props: UserSettingsLayoutProps) {
                     >
                       <Avatar className="h-8 w-8">
                         <AvatarImage src={props.profile_picture} className="h-full w-full object-cover" />
+                        <AvatarFallback className="h-full w-full object-cover"><CircleUser className="h-full w-full" /></AvatarFallback>
                       </Avatar>
                       <div className="grid flex-1 text-left text-sm leading-tight">
                         <span className="truncate font-semibold">{user.name}</span>

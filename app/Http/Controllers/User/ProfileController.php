@@ -66,15 +66,16 @@ class ProfileController extends Controller
 
         // Only one membership for now
         $memberships = UserMembership::where('user_id', $user->id)->get()->all();
-        // $memberships = DB::table('user_memberships')->where("user_id", "=", $user->id)->get()->all();
         $membership = Membership::find($memberships[0]->membership_id)->name;
+
+        $profile_picture = $profile->profile_picture;
 
         return Inertia::render("User/Settings/Profile", [
             'name' => $request->user()->name,
             'email' => $request->user()->email,
             'display_name' => $profile->display_name,
             'social_url' => $profile->social_url,
-            'profile_picture' => Storage::url($profile->profile_picture),
+            'profile_picture' => $profile_picture ? Storage::url($profile->profile_picture) : null,
             'organization_name' => $settings['name'],
             'organization_logo' => Storage::url($settings['logo']),
             'membership' => $membership
