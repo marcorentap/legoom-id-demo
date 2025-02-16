@@ -21,7 +21,8 @@ Route::get('/dashboard', function (Request $request) {
     if ($request->user()->role == 'admin') {
         return redirect(route('admin.dashboard'));
     } else {
-        return Inertia::render('Dashboard');
+        return redirect(route('user.settings'));
+        // return Inertia::render('Dashboard');
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -38,3 +39,5 @@ Route::get('/invalid', function () {
 require __DIR__ . '/auth.php';
 
 require __DIR__ . '/admin.php';
+
+require __DIR__ . '/user.php';

@@ -26,9 +26,6 @@ export default function Settings(props: SettingsProps) {
   let orgName = props.settings["name"]
   let orgLogo = props.settings["logo"]
 
-  console.log(JSON.stringify(props.settings))
-  console.log(JSON.stringify(props.errors))
-
   const onSubmit = function(data, e) {
     let values = form.getValues()
     form.reset()

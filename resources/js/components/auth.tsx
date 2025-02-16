@@ -28,7 +28,6 @@ export interface RegisterFormProps {
 
 function handleLogin(e) {
   router.post(route('login'), e)
-  // console.log(JSON.stringify(e))
 }
 
 function handleRegister(e) {
