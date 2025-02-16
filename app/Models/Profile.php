@@ -12,5 +12,6 @@ class Profile extends Model
         'display_name',
         'social_url',
         'profile_picture',
+        'user_id'
     ];
 }

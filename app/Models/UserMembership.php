@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class UserMembership extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'membership_id',
+    ];
+
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
