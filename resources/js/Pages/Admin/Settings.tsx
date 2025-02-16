@@ -13,6 +13,9 @@ import { useForm } from "react-hook-form"
 
 
 export interface SettingsProps {
+  organization_name: string
+  organization_logo: string
+  profile_picture: string
   errors?: {
     organization_name: string
     organization_logo: string
@@ -23,8 +26,6 @@ export interface SettingsProps {
 export default function Settings(props: SettingsProps) {
   const form = useForm()
   const [filename, setFilename] = useState<string | null>(null);
-  let orgName = props.settings["name"]
-  let orgLogo = props.settings["logo"]
 
   const onSubmit = function(data, e) {
     let values = form.getValues()
@@ -35,7 +36,7 @@ export default function Settings(props: SettingsProps) {
   return (
     <>
       <Head title="Platform Settings" />
-      <AdminDashboardLayout title='Settings'>
+      <AdminDashboardLayout title='Settings' {...props}>
         <div className="max-w-xl">
           <Card className="p-5 mb-5">
             <Form {...form}>
@@ -47,7 +48,7 @@ export default function Settings(props: SettingsProps) {
                     <FormItem>
                       <FormLabel>Organization Name</FormLabel>
                       <FormControl>
-                        <Input placeholder={orgName} {...field} value={field.value ?? ''} />
+                        <Input placeholder={props.organization_name} {...field} value={field.value ?? ''} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -91,8 +92,8 @@ export default function Settings(props: SettingsProps) {
           </Card>
           <div className="text-xl font-semibold mb-1">Preview</div>
           <div className="grid gap-5">
-            <LoginForm organization_name={orgName} organization_logo={orgLogo} fake={true} />
-            <RegisterForm organization_name={orgName} organization_logo={orgLogo} fake={true} />
+            <LoginForm organization_name={props.organization_name} organization_logo={props.organization_logo} fake={true} />
+            <RegisterForm organization_name={props.organization_name} organization_logo={props.organization_logo} fake={true} />
           </div>
         </div>
       </AdminDashboardLayout>

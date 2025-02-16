@@ -7,19 +7,23 @@ import { Link, usePage } from "@inertiajs/react";
 import LegoomID from "@/../images/LegoomID.svg"
 
 export interface AdminDashboardLayoutProps {
+  organization_name: string
+  organization_logo: string
+  profile_picture: string
   title: string
   children?: ReactNode
 }
 
 export default function AdminDashboardLayout(props: AdminDashboardLayoutProps) {
   const user = usePage().props.auth.user;
+  console.log(props.organization_logo)
   return (
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
           <SidebarGroup>
-            <img src={LegoomID} className="w-8 m-auto mb-1" />
-            <p className="text-center font-semibold">Legoom ID SSO</p>
+            <img src={props.organization_logo} className="w-8 m-auto mb-1" />
+            <p className="text-center font-semibold">{props.organization_name}</p>
           </SidebarGroup>
         </SidebarHeader>
 
@@ -81,7 +85,7 @@ export default function AdminDashboardLayout(props: AdminDashboardLayoutProps) {
                   align="end"
                   sideOffset={4}
                 >
-                  <Link href="#" method="post" className="w-full">
+                  <Link href={route('user.settings')} className="w-full">
                     <DropdownMenuItem className="cursor-pointer">
                       <UserRoundCog />
                       Account Settings

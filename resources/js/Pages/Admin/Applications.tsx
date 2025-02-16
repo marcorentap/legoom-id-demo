@@ -8,6 +8,9 @@ export interface Application{
   app_name: string
   app_secret: string
   app_callback: string
+  organization_name: string
+  organization_logo: string
+  profile_picture: string
 }
 
 export interface ApplicationProps {
@@ -16,7 +19,7 @@ export interface ApplicationProps {
 
 export default function Applications(props: ApplicationProps) {
   return (
-    <AdminDashboardLayout title="Applications">
+    <AdminDashboardLayout title="Applications" {...props}>
       <ApplicationTable {...props} />
     </AdminDashboardLayout>
   )

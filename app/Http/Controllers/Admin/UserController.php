@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PlatformSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -58,9 +60,13 @@ class UserController extends Controller
                 'memberships.name as membership',
             )
             ->get();
-        // $users = DB::table('users')->get(['id', 'name', 'email', 'email_verified_at', 'role']);
+        $settings = PlatformSettings::pluck('value', 'key')->toArray();
+        $profilePicture = $request->user()->profile->profile_picture;
         return Inertia::render("Admin/Users", [
-            'users' => $users
+            'users' => $users,
+            'organization_name' => $settings['name'],
+            'organization_logo' => Storage::url($settings['logo']),
+            'profile_picture' => $profilePicture ? Storage::url($profilePicture) : null,
         ]);
     }
 
