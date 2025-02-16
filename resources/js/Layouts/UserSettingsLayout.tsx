@@ -88,12 +88,6 @@ export default function UserSettingsLayout(props: UserSettingsLayoutProps) {
                     align="end"
                     sideOffset={4}
                   >
-                    <Link href="#" method="post" className="w-full">
-                      <DropdownMenuItem className="cursor-pointer">
-                        <UserRoundCog />
-                        Account Settings
-                      </DropdownMenuItem>
-                    </Link>
                     <Link href={route('logout')} method="post" className="w-full">
                       <DropdownMenuItem className="cursor-pointer">
                         <LogOut />
