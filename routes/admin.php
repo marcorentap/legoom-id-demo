@@ -18,6 +18,7 @@ Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(functio
     // Route::get('/admin/dashboard', redirect(route('admin.users')))->name('admin.dashboard');
     Route::get('/admin/users', [UserController::class, 'edit'])->name('admin.users');
     Route::get('/admin/applications', [ApplicationController::class, 'edit'])->name('admin.applications');
+    Route::post('/admin/applications', [ApplicationController::class, 'create'])->name('admin.applications.create');
 });
 
 Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(function () {

@@ -7,8 +7,11 @@ use App\Models\PlatformSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Laravel\Passport\Client;
+use Laravel\Passport\Passport;
+use Illuminate\Support\Str;
 
 class ApplicationController extends Controller
 {
@@ -26,5 +29,31 @@ class ApplicationController extends Controller
             'organization_logo' => Storage::url($settings['logo']),
             'profile_picture' => $profilePicture ? Storage::url($profilePicture) : null,
         ]);
+    }
+
+    public function create(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'string|max:255',
+                'callback' => 'url|max:255',
+            ]
+        );
+        if ($validator->fails()) {
+            return to_route("admin.applications")->withErrors($validator);
+        }
+        $validated = $validator->validated();
+        Client::create([
+            'user_id' => $request->user()->id,
+            'name' => $validated['name'],
+            'redirect' => $validated['callback'],
+            'secret' => Str::random(40),
+            'personal_access_client' => false,
+            'password_client' => false,
+            'revoked' => false
+        ]);
+
+        return to_route('admin.applications');
     }
 }
