@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import AuthenticationLayout from '@/Layouts/AuthenticationLayout'
+import { Head } from '@inertiajs/react';
 import { Info } from 'lucide-react';
 
 interface AuthorizePageProps {
@@ -56,8 +57,11 @@ export default function Authorize(props: AuthorizePageProps) {
   let { client, user, scopes, request, authToken, csrfToken } = props
 
   return (
-    <AuthenticationLayout>
-      <AuthorizationForm {...props} />
-    </AuthenticationLayout>
+    <>
+      <Head title="Authorize" />
+      <AuthenticationLayout>
+        <AuthorizationForm {...props} />
+      </AuthenticationLayout>
+    </>
   )
 }
