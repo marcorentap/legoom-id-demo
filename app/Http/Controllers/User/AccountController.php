@@ -52,9 +52,12 @@ class AccountController extends Controller
     public function edit(Request $request)
     {
         $settings = PlatformSettings::pluck('value', 'key')->toArray();
+        $profile = $request->user()->profile;
+        $profile_picture = $profile->profile_picture;
         return Inertia::render("User/Settings/Account", [
             'name' => $request->user()->name,
             'email' => $request->user()->email,
+            'profile_picture' => $profile_picture ? Storage::url($profile->profile_picture) : null,
             'organization_name' => $settings['name'],
             'organization_logo' => Storage::url($settings['logo'])
         ]);
