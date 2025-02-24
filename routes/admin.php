@@ -19,6 +19,7 @@ Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(functio
     Route::get('/admin/users', [UserController::class, 'edit'])->name('admin.users');
     Route::get('/admin/applications', [ApplicationController::class, 'edit'])->name('admin.applications');
     Route::post('/admin/applications', [ApplicationController::class, 'create'])->name('admin.applications.create');
+    Route::post('/admin/applications/{id}', [ApplicationController::class, 'update'])->name('admin.applications.update');
 });
 
 Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(function () {

@@ -56,4 +56,23 @@ class ApplicationController extends Controller
 
         return to_route('admin.applications');
     }
+
+    public function update(Request $request, string $id) {
+        Log::info($request->all());
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'update_name' => 'string|max:255',
+                'update_callback' => 'url|max:255',
+            ]
+        );
+        if ($validator->fails()) {
+            return to_route("admin.applications")->withErrors($validator);
+        }
+        $validated = $validator->validated();
+        $client = Client::find($id);
+        $client->name = $validated['update_name'];
+        $client->redirect = $validated['update_callback'];
+        $client->save();
+    }
 }
