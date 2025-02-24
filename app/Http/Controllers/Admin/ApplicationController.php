@@ -4,18 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PlatformSettings;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Inertia\Response;
 use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Str;
 
 class ApplicationController extends Controller
 {
-    public function edit(Request $request)
+    /**
+     * @return Response
+     */
+    public function edit(Request $request): Response
     {
         $apps = Client::select(
             ['id as app_id', 'name as app_name', 'secret as app_secret', 'redirect as app_callback']
@@ -30,8 +35,10 @@ class ApplicationController extends Controller
             'profile_picture' => $profilePicture ? Storage::url($profilePicture) : null,
         ]);
     }
-
-    public function create(Request $request)
+    /**
+     * @return RedirectResponse
+     */
+    public function create(Request $request): RedirectResponse
     {
         $validator = Validator::make(
             $request->all(),
@@ -56,9 +63,10 @@ class ApplicationController extends Controller
 
         return to_route('admin.applications');
     }
-
-    public function update(Request $request, string $id) {
-        Log::info($request->all());
+    /**
+     * @return RedirectResponse
+     */
+    public function update(Request $request, string $id): RedirectResponse {
         $validator = Validator::make(
             $request->all(),
             [
@@ -74,5 +82,13 @@ class ApplicationController extends Controller
         $client->name = $validated['update_name'];
         $client->redirect = $validated['update_callback'];
         $client->save();
+    }
+    /**
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request, string $id): RedirectResponse {
+        $client = Client::find($id);
+    $client->delete();
+        return to_route('admin.applications');
     }
 }

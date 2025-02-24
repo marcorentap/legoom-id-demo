@@ -76,6 +76,11 @@ export function EditDialog(props: EditDialogProps) {
         form.reset();
     }
 
+    function onDelete() {
+        router.delete(route('admin.applications.update', app?.app_id));
+        form.reset();
+    }
+
     return (
         <Dialog
             open={props.open}
@@ -121,7 +126,10 @@ export function EditDialog(props: EditDialogProps) {
                         >
                             Save changes
                         </Button>
-                        <Link className="flex items-center font-semibold text-red-500">
+                        <Link
+                            onClick={form.handleSubmit(onDelete)}
+                            className="flex items-center font-semibold text-red-500"
+                        >
                             Delete
                         </Link>
                     </div>

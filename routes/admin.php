@@ -20,6 +20,7 @@ Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(functio
     Route::get('/admin/applications', [ApplicationController::class, 'edit'])->name('admin.applications');
     Route::post('/admin/applications', [ApplicationController::class, 'create'])->name('admin.applications.create');
     Route::post('/admin/applications/{id}', [ApplicationController::class, 'update'])->name('admin.applications.update');
+    Route::delete('/admin/applications/{id}', [ApplicationController::class, 'destroy'])->name('admin.applications.destroy');
 });
 
 Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(function () {
