@@ -160,7 +160,7 @@ export function ApplicationForm(props: ApplicationFormProps) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Add Application</CardTitle>
+                <CardTitle>Add application</CardTitle>
             </CardHeader>
             <CardContent>
                 {nameError ? (
