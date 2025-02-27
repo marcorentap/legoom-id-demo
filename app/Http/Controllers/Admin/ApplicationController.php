@@ -70,8 +70,8 @@ class ApplicationController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'update_name' => 'string|max:255',
-                'update_callback' => 'url|max:255',
+                'update_name' => 'string|max:255|nullable',
+                'update_callback' => 'url|max:255|nullable',
             ]
         );
         if ($validator->fails()) {
@@ -79,8 +79,12 @@ class ApplicationController extends Controller
         }
         $validated = $validator->validated();
         $client = Client::find($id);
-        $client->name = $validated['update_name'];
-        $client->redirect = $validated['update_callback'];
+        if ($validated['update_name']) {
+            $client->name = $validated['update_name'];
+        }
+        if ($validated['update_callback']) {
+            $client->redirect = $validated['update_callback'];
+        }
         $client->save();
 
         return to_route("admin.applications");
