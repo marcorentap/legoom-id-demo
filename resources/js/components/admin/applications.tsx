@@ -117,6 +117,14 @@ export function EditDialog(props: EditDialogProps) {
                                 {...form.register('update_callback')}
                             />
                         </div>
+                        <div className="grid gap-2">
+                            <Label>ID</Label>
+                            <Input value={app?.app_id} readOnly={true} />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label>Secret</Label>
+                            <Input value={app?.app_secret} readOnly={true} />
+                        </div>
                     </div>
                     <div className="mt-3 flex justify-between">
                         <Button
