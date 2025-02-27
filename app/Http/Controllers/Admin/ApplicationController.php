@@ -88,7 +88,9 @@ class ApplicationController extends Controller
      */
     public function destroy(Request $request, string $id): RedirectResponse {
         $client = Client::find($id);
-    $client->delete();
+        if ($client) {
+            $client->delete();
+        }
         return to_route('admin.applications');
     }
 }
