@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Membership;
 use App\Models\PlatformSettings;
+use App\Models\UserMembership;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -74,6 +74,12 @@ class MembershipController extends Controller
      */
     public function destroy(Request $request, string $id): RedirectResponse{
         $memb = Membership::find($id);
+        $userMemb = UserMembership::where('membership_id', $memb->id)->first();
+
+        if ($userMemb) {
+            return to_route('admin.membership')->withErrors(['delete' => 'Membership still in use']);
+        }
+
         if ($memb) {
             $memb->delete();
         }
