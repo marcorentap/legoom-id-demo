@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import {
     ColumnDef,
     flexRender,
@@ -6,6 +7,11 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Button } from '../ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 import {
     Table,
     TableBody,
@@ -34,6 +40,53 @@ const columns: ColumnDef<Membership>[] = [
         header: 'Name',
     },
 ];
+
+export interface MembershipApplicationFormProps {
+    errors?: {
+        name: string;
+        id: string;
+    };
+}
+
+export function MembershipForm(props: MembershipApplicationFormProps) {
+    const form = useForm();
+    const nameError = props.errors?.name;
+
+    function onSubmit() {
+        router.post(route('admin.membership'), form.getValues());
+        // form.reset();
+    }
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Add Membership</CardTitle>
+            </CardHeader>
+            <CardContent>
+                {nameError ? (
+                    <div className="text-sm text-red-500">{nameError}</div>
+                ) : null}
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <div className="flex flex-col gap-4">
+                        <div className="grid gap-2">
+                            <Label htmlFor="name">Name</Label>
+                            <Input
+                                id="name"
+                                placeholder="Example"
+                                {...form.register('name')}
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <Button type="submit" className="mt-5 rounded-full">
+                            Create
+                        </Button>
+                    </div>
+                </form>
+            </CardContent>
+        </Card>
+    );
+}
 
 export function MembershipTable(props: MembershipTableProps) {
     const table = useReactTable({

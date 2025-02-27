@@ -25,6 +25,7 @@ import {
     LayoutGrid,
     LogOut,
     Settings,
+    Sparkles,
     UserRoundCog,
     Users,
 } from 'lucide-react';
@@ -67,6 +68,14 @@ export default function AdminDashboardLayout(props: AdminDashboardLayoutProps) {
                                         <a href={route('admin.users')}>
                                             <Users />
                                             <span>Users</span>
+                                        </a>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                                <SidebarMenuItem>
+                                    <SidebarMenuButton asChild>
+                                        <a href={route('admin.membership')}>
+                                            <Sparkles />
+                                            <span>Membership</span>
                                         </a>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
