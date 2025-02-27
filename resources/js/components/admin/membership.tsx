@@ -55,7 +55,6 @@ export interface EditDialogProps {
     onOpenChange(open: boolean): void;
     errors?: {
         update_name: string;
-        update_callback: string;
     };
 }
 
@@ -63,7 +62,12 @@ function EditDialog(props: EditDialogProps) {
     const form = useForm();
     const memb = props.membership;
     const nameError = props.errors?.update_name;
-    const callbackError = props.errors?.update_callback;
+
+    useEffect(() => {
+        if (props.errors?.update_name) {
+            props.onOpenChange(true);
+        }
+    }, []);
 
     function onSubmit() {
         router.post(
@@ -71,11 +75,13 @@ function EditDialog(props: EditDialogProps) {
             form.getValues(),
         );
         form.reset();
+        props.onOpenChange(false);
     }
 
     function onDelete() {
         router.delete(route('admin.membership.delete', memb?.id));
         form.reset();
+        props.onOpenChange(false);
     }
 
     return (
@@ -90,9 +96,6 @@ function EditDialog(props: EditDialogProps) {
                 <DialogTitle>Edit membership</DialogTitle>
                 {nameError ? (
                     <div className="text-sm text-red-500">{nameError}</div>
-                ) : null}
-                {callbackError ? (
-                    <div className="text-sm text-red-500">{callbackError}</div>
                 ) : null}
                 <form>
                     <div className="flex flex-col gap-4">
@@ -132,7 +135,7 @@ export function MembershipForm(props: MembershipApplicationFormProps) {
 
     function onSubmit() {
         router.post(route('admin.membership'), form.getValues());
-        // form.reset();
+        form.reset();
     }
 
     return (
@@ -173,8 +176,8 @@ export function MembershipTable(props: MembershipTableProps) {
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
     });
-    const [selectedMemb, setSelectedApp] = useState<Membership | null>(null);
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+    const [selectedMemb, setSelectedApp] = useState<Membership | null>(null);
 
     useEffect(() => {
         table.setPageSize(Number(20));

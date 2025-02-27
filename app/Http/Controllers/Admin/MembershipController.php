@@ -50,6 +50,25 @@ class MembershipController extends Controller
         ]);
         return to_route('admin.membership');
     }
+
+    public function update(Request $request, string $id): RedirectResponse {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'update_name' => 'string|max:255',
+            ]
+        );
+        if ($validator->fails()) {
+            return to_route("admin.membership")->withErrors($validator);
+        }
+        $validated = $validator->validated();
+        $memb = Membership::find($id);
+        $memb->name = $validated['update_name'];
+        $memb->save();
+
+        return to_route("admin.membership");
+    }
+
     /**
      * @return RedirectResponse
      */

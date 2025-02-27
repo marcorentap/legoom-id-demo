@@ -82,7 +82,10 @@ class ApplicationController extends Controller
         $client->name = $validated['update_name'];
         $client->redirect = $validated['update_callback'];
         $client->save();
+
+        return to_route("admin.applications");
     }
+
     /**
      * @return RedirectResponse
      */
