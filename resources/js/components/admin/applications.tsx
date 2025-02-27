@@ -1,4 +1,4 @@
-import { Link, router } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import {
     ColumnDef,
     flexRender,
@@ -126,12 +126,12 @@ export function EditDialog(props: EditDialogProps) {
                         >
                             Save changes
                         </Button>
-                        <Link
+                        <div
                             onClick={form.handleSubmit(onDelete)}
-                            className="flex items-center font-semibold text-red-500"
+                            className="flex cursor-pointer items-center font-semibold text-red-500"
                         >
                             Delete
-                        </Link>
+                        </div>
                     </div>
                 </form>
             </DialogContent>
