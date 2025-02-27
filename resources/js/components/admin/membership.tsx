@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Dialog, DialogContent, DialogTitle } from '../ui/dialog';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import {
@@ -48,6 +49,83 @@ export interface MembershipApplicationFormProps {
     };
 }
 
+export interface EditDialogProps {
+    membership: Membership | null;
+    open: boolean;
+    onOpenChange(open: boolean): void;
+    errors?: {
+        update_name: string;
+        update_callback: string;
+    };
+}
+
+function EditDialog(props: EditDialogProps) {
+    const form = useForm();
+    const memb = props.membership;
+    const nameError = props.errors?.update_name;
+    const callbackError = props.errors?.update_callback;
+
+    function onSubmit() {
+        router.post(
+            route('admin.membership.update', memb?.id),
+            form.getValues(),
+        );
+        form.reset();
+    }
+
+    function onDelete() {
+        router.delete(route('admin.membership.delete', memb?.id));
+        form.reset();
+    }
+
+    return (
+        <Dialog
+            open={props.open}
+            onOpenChange={() => {
+                props.onOpenChange(false);
+                form.reset();
+            }}
+        >
+            <DialogContent>
+                <DialogTitle>Edit membership</DialogTitle>
+                {nameError ? (
+                    <div className="text-sm text-red-500">{nameError}</div>
+                ) : null}
+                {callbackError ? (
+                    <div className="text-sm text-red-500">{callbackError}</div>
+                ) : null}
+                <form>
+                    <div className="flex flex-col gap-4">
+                        <div className="grid gap-2">
+                            <Label htmlFor="update_name">Name</Label>
+                            <Input
+                                id="update_name"
+                                placeholder={memb?.name}
+                                {...form.register('update_name')}
+                            />
+                        </div>
+                    </div>
+                    <div className="mt-3 flex justify-between">
+                        <Button
+                            onClick={form.handleSubmit(onSubmit)}
+                            type="submit"
+                            className="rounded-full"
+                        >
+                            Save changes
+                        </Button>
+                        <div
+                            onClick={form.handleSubmit(onDelete)}
+                            className="flex cursor-pointer items-center font-semibold text-red-500"
+                        >
+                            Delete
+                        </div>
+                    </div>
+                </form>
+            </DialogContent>
+        </Dialog>
+    );
+}
+
 export function MembershipForm(props: MembershipApplicationFormProps) {
     const form = useForm();
     const nameError = props.errors?.name;
@@ -60,7 +138,7 @@ export function MembershipForm(props: MembershipApplicationFormProps) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Add Membership</CardTitle>
+                <CardTitle>Add membership</CardTitle>
             </CardHeader>
             <CardContent>
                 {nameError ? (
@@ -95,7 +173,7 @@ export function MembershipTable(props: MembershipTableProps) {
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
     });
-    const [selectedApp, setSelectedApp] = useState<Membership | null>(null);
+    const [selectedMemb, setSelectedApp] = useState<Membership | null>(null);
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
     useEffect(() => {
@@ -104,6 +182,12 @@ export function MembershipTable(props: MembershipTableProps) {
 
     return (
         <div>
+            <EditDialog
+                membership={selectedMemb}
+                open={dialogOpen}
+                onOpenChange={setDialogOpen}
+                {...props}
+            />
             <div className="rounded-xl border">
                 <Table>
                     <TableHeader>

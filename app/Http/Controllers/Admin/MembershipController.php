@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Membership;
 use App\Models\PlatformSettings;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -29,8 +30,10 @@ class MembershipController extends Controller
             'profile_picture' => $profilePicture ? Storage::url($profilePicture) : null,
         ]);
     }
-
-    public function create(Request $request){
+    /**
+     * @return RedirectResponse
+     */
+    public function create(Request $request): RedirectResponse{
         $validator = Validator::make(
             $request->all(),
             [
@@ -45,6 +48,16 @@ class MembershipController extends Controller
         Membership::create([
             'name' => $validated['name']
         ]);
+        return to_route('admin.membership');
+    }
+    /**
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request, string $id): RedirectResponse{
+        $memb = Membership::find($id);
+        if ($memb) {
+            $memb->delete();
+        }
         return to_route('admin.membership');
     }
 }

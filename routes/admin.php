@@ -17,6 +17,8 @@ Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(functio
 
     Route::get('/admin/membership', [MembershipController::class, 'edit'])->name('admin.membership');
     Route::post('/admin/membership', [MembershipController::class, 'create'])->name('admin.membership');
+    Route::delete('/admin/membership/{id}', [MembershipController::class, 'destroy'])->name('admin.membership.delete');
+    Route::post('/admin/membership/{id}', [MembershipController::class, 'update'])->name('admin.membership.update');
 
     Route::get('/admin/applications', [ApplicationController::class, 'edit'])->name('admin.applications');
     Route::post('/admin/applications', [ApplicationController::class, 'create'])->name('admin.applications.create');
