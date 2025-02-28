@@ -108,7 +108,10 @@ export default function Settings(props: SettingsProps) {
                                         </FormItem>
                                     )}
                                 />
-                                <Button className="mt-5" type="submit">
+                                <Button
+                                    className="mt-5 rounded-full"
+                                    type="submit"
+                                >
                                     Submit
                                 </Button>
                             </form>
