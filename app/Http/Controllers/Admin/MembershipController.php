@@ -20,14 +20,14 @@ class MembershipController extends Controller
      */
     public function edit(Request $request): Response {
         $settings = PlatformSettings::pluck('value', 'key')->toArray();
-        $profilePicture = $request->user()->profile->profile_picture;
+        $profilePicture = $request->user()->profile->getCanonicalProfilePicture();
         $memberships = Membership::all()->select(['id','name']);
 
         return Inertia::render("Admin/Membership", [
             'memberships' => $memberships,
             'organization_name' => $settings['name'],
             'organization_logo' => Storage::url($settings['logo']),
-            'profile_picture' => $profilePicture ? Storage::url($profilePicture) : null,
+            'profile_picture' => $profilePicture,
         ]);
     }
     /**

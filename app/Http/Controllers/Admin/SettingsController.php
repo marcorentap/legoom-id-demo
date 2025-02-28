@@ -54,11 +54,11 @@ class SettingsController extends Controller
     public function edit(Request $request): Response
     {
         $settings = PlatformSettings::pluck('value', 'key')->toArray();
-        $profilePicture = $request->user()->profile->profile_picture;
+        $profilePicture = $request->user()->profile->getCanonicalProfilePicture();
         return Inertia::render("Admin/Settings", [
             'organization_name' => $settings['name'],
             'organization_logo' => Storage::url($settings['logo']),
-            'profile_picture' => $profilePicture ? Storage::url($profilePicture) : null,
+            'profile_picture' => $profilePicture,
         ]);
     }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PlatformSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -61,12 +62,13 @@ class UserController extends Controller
             )
             ->get();
         $settings = PlatformSettings::pluck('value', 'key')->toArray();
-        $profilePicture = $request->user()->profile->profile_picture;
+
+        Log::info($request->user()->profile->getCanonicalProfilePicture());
         return Inertia::render("Admin/Users", [
             'users' => $users,
             'organization_name' => $settings['name'],
             'organization_logo' => Storage::url($settings['logo']),
-            'profile_picture' => $profilePicture ? Storage::url($profilePicture) : null,
+            'profile_picture' => $request->user()->profile->getCanonicalProfilePicture(),
         ]);
     }
 
