@@ -2,6 +2,7 @@ export interface User {
     account: Account;
     profile: Profile;
     membership: Membership;
+    role: string;
 }
 
 export interface Account {
@@ -20,6 +21,11 @@ export interface Profile {
 export interface Membership {
     id: string;
     name: string;
+}
+
+export interface Settings {
+    name: string;
+    logo: string;
 }
 
 export interface Organization {

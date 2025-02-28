@@ -4,14 +4,11 @@ import { Membership } from '@/types/app';
 
 export interface ApplicationProps {
     memberships: Membership[];
-    organization_name: string;
-    organization_logo: string;
-    profile_picture: string;
 }
 
 export default function Applications(props: ApplicationProps) {
     return (
-        <AdminDashboardLayout title="Membership" {...props}>
+        <AdminDashboardLayout title="Membership">
             <div className="grid gap-5">
                 <MembershipForm {...props} />
                 <MembershipTable {...props} />
