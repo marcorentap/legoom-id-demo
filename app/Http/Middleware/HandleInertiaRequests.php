@@ -32,8 +32,8 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $user = $request->user();
-        $profile = $user->profile;
-        $membership = $user->memberships->first();
+        $profile = $user ? $user->profile : null;
+        $membership = $user ? $user->memberships->first() : null;
         $settings = PlatformSettings::pluck('value', 'key');
 
         return [
@@ -42,22 +42,22 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
                 ],
             'user' => [
-                'account' => [
+                'account' => $user ? [
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
                     'email_verified_at' => $user->email_verified_at,
                     'role' => $user->role,
-                ],
-                'profile' => [
+                ] : null,
+                'profile' => $profile ? [
                     'display_name' => $profile->display_name,
                     'profile_picture' => $profile->getCanonicalProfilePicture(),
                     'social_url' => $profile->social_url,
-                ],
-                'membership' => [
+                ] : null,
+                'membership' => $membership ? [
                     'id' => $membership->id,
                     'name' => $membership->name,
-                ]
+                ] : null,
             ],
             'settings' => [
                 'name' => PlatformSettings::getOrganizationName(),
