@@ -16,13 +16,32 @@ class PlatformSettings extends Model
     public static function setOrganizationName(string $name)
     {
         $setting = PlatformSettings::where('key', 'name')->first();
-        $setting->value = $name;
-        $setting->save();
+        if ($setting) {
+            $setting->value = $name;
+            $setting->save();
+        } else {
+            PlatformSettings::create(['key'=>'name', 'value'=>$name]);
+        }
     }
 
     public static function getOrganizationName() : string
     {
         return PlatformSettings::where('key', 'name')->first()->value;
+    }
+
+    public static function setOrganizationLogo(string $logo)
+    {
+        $newURL = Storage::putFile("/public", $logo);
+        $newPath = Storage::path($newURL);
+
+        $setting = PlatformSettings::where('key', 'logo')->first();
+        if ($setting) {
+            Storage::delete($setting->value);
+            $setting->value = $newPath;
+            $setting->save();
+        } else {
+            PlatformSettings::create(['key'=>'logo', 'value'=>$newPath]);
+        }
     }
 
     public static function getOrganizationLogo() : string

@@ -30,7 +30,6 @@ export default function Settings(props: SettingsProps) {
 
     const onSubmit = function (data, e) {
         let values = form.getValues();
-        form.reset();
         router.post(route('admin.settings.update'), values);
     };
 

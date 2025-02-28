@@ -59,25 +59,18 @@ function EditDialog(props: EditDialogProps) {
     const memb = props.membership;
     const nameError = props.errors?.update_name;
 
-    useEffect(() => {
-        if (props.errors?.update_name) {
-            props.onOpenChange(true);
-        }
-    }, []);
-
     function onSubmit() {
         router.post(
             route('admin.membership.update', memb?.id),
             form.getValues(),
+            { preserveState: 'errors' },
         );
-        form.reset();
-        props.onOpenChange(false);
     }
 
     function onDelete() {
-        router.delete(route('admin.membership.delete', memb?.id));
-        form.reset();
-        props.onOpenChange(false);
+        router.delete(route('admin.membership.delete', memb?.id), {
+            preserveState: 'errors',
+        });
     }
 
     return (
@@ -130,8 +123,9 @@ export function MembershipForm(props: MembershipApplicationFormProps) {
     const nameError = props.errors?.name;
 
     function onSubmit() {
-        router.post(route('admin.membership'), form.getValues());
-        form.reset();
+        router.post(route('admin.membership'), form.getValues(), {
+            preserveState: 'errors',
+        });
     }
 
     return (

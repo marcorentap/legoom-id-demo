@@ -72,13 +72,14 @@ export function EditDialog(props: EditDialogProps) {
         router.post(
             route('admin.applications.update', app?.app_id),
             form.getValues(),
+            { preserveState: 'errors' },
         );
-        form.reset();
     }
 
     function onDelete() {
-        router.delete(route('admin.applications.update', app?.app_id));
-        form.reset();
+        router.delete(route('admin.applications.update', app?.app_id), {
+            preserveState: 'errors',
+        });
     }
 
     return (

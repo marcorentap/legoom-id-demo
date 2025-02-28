@@ -81,29 +81,15 @@ class SettingsController extends Controller
         $validated = $validator->validated();
 
         // Update organization name
-        if (array_key_exists("organization_name", $validated)) {
-            if ($validated['organization_name']) {
-                $new = PlatformSettings::create([
-                    "key" => "name",
-                    "value" => $validated["organization_name"],
-                ]);
-                $new->save();
-            }
+        $name = $validated['organization_name'];
+        if ($name) {
+            PlatformSettings::setOrganizationName($name);
         }
 
         // Update organization logo
-        if (array_key_exists("organization_logo", $validated)) {
-            if ($validated['organization_logo']) {
-                $entry = PlatformSettings::where('key', 'logo')->first();
-                $currentPath = $entry->value;
-
-                $newURL = Storage::putFile("/public", $validated["organization_logo"]);
-                $newPath = Storage::path($newURL);
-
-                $entry->value = Storage::path($newURL);
-                Storage::delete($currentPath);
-                $entry->save();
-            }
+        $logo = $validated['organization_logo'];
+        if ($logo) {
+            PlatformSettings::setOrganizationLogo($logo);
         }
 
         return redirect(route('admin.settings'));
