@@ -103,7 +103,6 @@ class SettingsController extends Controller
                 $entry->value = Storage::path($newURL);
                 Storage::delete($currentPath);
                 $entry->save();
-                Log::info("Saved organization logo to " . $newPath);
             }
         }
 

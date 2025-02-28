@@ -63,7 +63,6 @@ class UserController extends Controller
             ->get();
         $settings = PlatformSettings::pluck('value', 'key')->toArray();
 
-        Log::info($request->user()->profile->getCanonicalProfilePicture());
         return Inertia::render("Admin/Users", [
             'users' => $users,
             'organization_name' => $settings['name'],

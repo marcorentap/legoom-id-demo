@@ -20,7 +20,6 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
 
-        Log::info($request->all());
         $validator = Validator::make(
             $request->all(),
             [
@@ -36,7 +35,6 @@ class ProfileController extends Controller
         }
         $validated = $validator->validated();
 
-        Log::info($validated);
         $profile = $request->user()->profile;
 
         if ($validated['display_name']) {
