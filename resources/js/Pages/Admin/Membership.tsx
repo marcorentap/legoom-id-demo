@@ -1,10 +1,6 @@
 import { MembershipForm, MembershipTable } from '@/components/admin/membership';
 import AdminDashboardLayout from '@/Layouts/AdminDashboardLayout';
-
-export interface Membership {
-    id: string;
-    name: string;
-}
+import { Membership } from '@/types/app';
 
 export interface ApplicationProps {
     memberships: Membership[];

@@ -1,3 +1,4 @@
+import { Membership } from '@/types/app';
 import { router } from '@inertiajs/react';
 import {
     ColumnDef,
@@ -21,11 +22,6 @@ import {
     TableHeader,
     TableRow,
 } from '../ui/table';
-
-export interface Membership {
-    id: string;
-    name: string;
-}
 
 export interface MembershipTableProps {
     memberships: Membership[];
