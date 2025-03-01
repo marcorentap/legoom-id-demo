@@ -30,9 +30,6 @@ class ApplicationController extends Controller
         $profilePicture = $request->user()->profile->getCanonicalProfilePicture();
         return Inertia::render("Admin/Applications", [
             'apps' => $apps,
-            'organization_name' => $settings['name'],
-            'organization_logo' => Storage::url($settings['logo']),
-            'profile_picture' => $profilePicture,
         ]);
     }
     /**

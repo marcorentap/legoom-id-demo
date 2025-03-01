@@ -61,13 +61,8 @@ class UserController extends Controller
                 'memberships.name as membership',
             )
             ->get();
-        $settings = PlatformSettings::pluck('value', 'key')->toArray();
-
         return Inertia::render("Admin/Users", [
             'users' => $users,
-            'organization_name' => $settings['name'],
-            'organization_logo' => Storage::url($settings['logo']),
-            'profile_picture' => $request->user()->profile->getCanonicalProfilePicture(),
         ]);
     }
 

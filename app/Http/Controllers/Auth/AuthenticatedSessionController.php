@@ -22,10 +22,7 @@ class AuthenticatedSessionController extends Controller
     public function create(): Response
     {
         $settings = PlatformSettings::pluck('value', 'key')->toArray();
-        return Inertia::render('Auth/Login', [
-            'organization_name' => $settings['name'],
-            'organization_logo' => Storage::url($settings['logo'])
-        ]);
+        return Inertia::render('Auth/Login');
     }
 
     /**

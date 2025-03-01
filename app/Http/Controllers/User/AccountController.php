@@ -58,8 +58,8 @@ class AccountController extends Controller
             'name' => $request->user()->name,
             'email' => $request->user()->email,
             'profile_picture' => $profile_picture ? Storage::url($profile->profile_picture) : null,
-            'organization_name' => $settings['name'],
-            'organization_logo' => Storage::url($settings['logo'])
+            'organization_logo' => PlatformSettings::getCanonicalOrganizationLogo(),
+            'organization_name' => PlatformSettings::getOrganizationName(),
         ]);
         return Inertia::render("User/Settings/Account");
     }

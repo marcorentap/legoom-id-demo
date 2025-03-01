@@ -54,11 +54,11 @@ class DatabaseSeeder extends Seeder
         }
 
         PlatformSettings::create([
-            'key' => 'name',
+            'key' => 'organization_name',
             'value' => 'My Organization'
         ]);
         PlatformSettings::create([
-            'key' => 'logo',
+            'key' => 'organization_logo',
             'value' => 'public/logo.svg'
         ]);
     }

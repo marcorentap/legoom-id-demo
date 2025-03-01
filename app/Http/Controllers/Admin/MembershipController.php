@@ -25,9 +25,6 @@ class MembershipController extends Controller
 
         return Inertia::render("Admin/Membership", [
             'memberships' => $memberships,
-            'organization_name' => $settings['name'],
-            'organization_logo' => Storage::url($settings['logo']),
-            'profile_picture' => $profilePicture,
         ]);
     }
     /**

@@ -74,8 +74,8 @@ class ProfileController extends Controller
             'display_name' => $profile->display_name,
             'social_url' => $profile->social_url,
             'profile_picture' => $profile_picture ? Storage::url($profile->profile_picture) : null,
-            'organization_name' => $settings['name'],
-            'organization_logo' => Storage::url($settings['logo']),
+            'organization_name' => PlatformSettings::getOrganizationName(),
+            'organization_logo' => PlatformSettings::getCanonicalOrganizationLogo(),
             'membership' => $membership
         ]);
     }
