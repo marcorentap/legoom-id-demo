@@ -10,6 +10,7 @@ export interface Account {
     name: string;
     email: string;
     email_verified_at?: string;
+    role: string;
 }
 
 export interface Profile {
@@ -29,8 +30,8 @@ export interface Settings {
 }
 
 export interface Organization {
-    name: string;
     logo: string;
+    name: string;
 }
 
 export interface Application {

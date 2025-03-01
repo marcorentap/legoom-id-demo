@@ -38,7 +38,7 @@ const columns: ColumnDef<Membership>[] = [
     },
 ];
 
-export interface MembershipApplicationFormProps {
+export interface MembershipFormProps {
     errors?: {
         name: string;
         id: string;
@@ -118,7 +118,7 @@ function EditDialog(props: EditDialogProps) {
     );
 }
 
-export function MembershipForm(props: MembershipApplicationFormProps) {
+export function MembershipForm(props: MembershipFormProps) {
     const form = useForm();
     const nameError = props.errors?.name;
 

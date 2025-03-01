@@ -143,8 +143,6 @@ export function EditDialog(props: EditDialogProps) {
 }
 
 export interface ApplicationFormProps {
-    organization_name: string;
-    organization_logo: string;
     errors?: {
         name: string;
         redirect: string;

@@ -1,12 +1,13 @@
-import { MembershipForm, MembershipTable } from '@/components/admin/membership';
+import {
+    MembershipForm,
+    MembershipFormProps,
+    MembershipTable,
+    MembershipTableProps,
+} from '@/components/admin/membership';
 import AdminDashboardLayout from '@/Layouts/AdminDashboardLayout';
-import { Membership } from '@/types/app';
 
-export interface ApplicationProps {
-    memberships: Membership[];
-}
-
-export default function Applications(props: ApplicationProps) {
+type MembershipProps = MembershipFormProps & MembershipTableProps;
+export default function Membership(props: MembershipProps) {
     return (
         <AdminDashboardLayout title="Membership">
             <div className="grid gap-5">

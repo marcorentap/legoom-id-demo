@@ -64,7 +64,7 @@ class SettingsController extends Controller
         $validator  = Validator::make(
             $request->all(),
             [
-                'organization_name' => 'nullable|string',
+                'organization_name' => 'nullable|string|max:255',
                 'organization_logo' => 'nullable|image',
             ]
         );

@@ -1,12 +1,12 @@
 import {
     ApplicationForm,
+    ApplicationFormProps,
     ApplicationTable,
+    ApplicationTableProps,
 } from '@/components/admin/applications';
 import AdminDashboardLayout from '@/Layouts/AdminDashboardLayout';
 
-export interface ApplicationProps {
-    apps: Application[];
-}
+type ApplicationProps = ApplicationFormProps & ApplicationTableProps;
 
 export default function Applications(props: ApplicationProps) {
     return (

@@ -1,12 +1,12 @@
-import { AccountForm, PasswordForm } from '@/components/settings';
+import {
+    AccountForm,
+    AccountFormProps,
+    PasswordForm,
+    PasswordFormProps,
+} from '@/components/settings';
 import UserSettingsLayout from '@/Layouts/UserSettingsLayout';
 
-export interface AccountSettingsProps {
-    organization_name: string;
-    organization_logo: string;
-    name: string;
-    email: string;
-}
+type AccountSettingsProps = AccountFormProps & PasswordFormProps;
 
 export default function AccountSettings(props: AccountSettingsProps) {
     return (

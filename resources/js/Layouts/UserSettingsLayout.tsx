@@ -133,7 +133,7 @@ export default function UserSettingsLayout(props: UserSettingsLayoutProps) {
                                         align="end"
                                         sideOffset={4}
                                     >
-                                        {user.role == 'admin' ? (
+                                        {user.account.role == 'admin' ? (
                                             <Link
                                                 href={route('admin.dashboard')}
                                                 className="w-full"

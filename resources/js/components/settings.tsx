@@ -34,10 +34,10 @@ export function AccountForm(props: AccountFormProps) {
     const form = useForm();
     const nameError = props.errors?.name;
     const emailError = props.errors?.email;
-    const { user, settings } = usePage().props;
+    const { user } = usePage().props;
 
-    const onSubmit = function (data, e) {
-        let values = form.getValues();
+    const onSubmit = function () {
+        const values = form.getValues();
         form.reset();
         router.post(route('user.settings.account.info'), values);
     };
@@ -90,8 +90,8 @@ export function PasswordForm(props: PasswordFormProps) {
     const passwordConfirmationError = props.errors?.password_confirmation;
     const passwordError = props.errors?.password;
 
-    const onSubmit = function (data, e) {
-        let values = form.getValues();
+    const onSubmit = function () {
+        const values = form.getValues();
         form.reset();
         router.post(route('user.settings.account.password'), values);
     };
@@ -164,22 +164,24 @@ export function ProfileForm(props: ProfileFormProps) {
     const socialUrlError = props.errors?.social_url;
     const profilePictureError = props.errors?.profile_picture;
     const [filename, setFilename] = useState<string | null>(null);
-    const { user, settings } = usePage().props;
+    const { user } = usePage().props;
 
-    const onSubmit = function (data, e) {
-        let values = form.getValues();
-        let profilePicture = values.profile_picture[0];
-        let upload = {
+    const onSubmit = function () {
+        const values = form.getValues();
+        const profilePicture = values.profile_picture[0];
+        const upload = {
             ...values,
             profile_picture: profilePicture ? profilePicture : null,
         };
-        router.post(route('user.settings.profile'), upload);
+        router.post(route('user.settings.profile'), upload, {
+            preserveState: 'errors',
+        });
     };
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Password</CardTitle>
+                <CardTitle>Profile</CardTitle>
             </CardHeader>
             <CardContent>
                 {displayNameError ? (

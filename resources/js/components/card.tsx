@@ -4,7 +4,7 @@ import { CircleUser } from 'lucide-react';
 import { Avatar } from './ui/avatar';
 import { Card, CardContent, CardHeader } from './ui/card';
 
-export default function ProfileCard(props: ProfileCardProps) {
+export default function ProfileCard() {
     const { user } = usePage().props;
     return (
         <Card>
