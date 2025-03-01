@@ -31,15 +31,12 @@ import {
 import { ReactNode } from 'react';
 
 export interface UserSettingsLayoutProps {
-    organization_name: string;
-    organization_logo: string;
-    profile_picture: string;
     title: string;
     children?: ReactNode;
 }
 
 export default function UserSettingsLayout(props: UserSettingsLayoutProps) {
-    const user = usePage().props.auth.user;
+    const { user, settings } = usePage().props;
     return (
         <>
             <Head title={props.title} />
@@ -48,11 +45,11 @@ export default function UserSettingsLayout(props: UserSettingsLayoutProps) {
                     <SidebarHeader>
                         <SidebarGroup>
                             <img
-                                src={props.organization_logo}
+                                src={settings.logo}
                                 className="m-auto mb-1 w-8"
                             />
                             <p className="text-center font-semibold">
-                                {props.organization_name}
+                                {settings.name}
                             </p>
                         </SidebarGroup>
                     </SidebarHeader>
@@ -110,7 +107,10 @@ export default function UserSettingsLayout(props: UserSettingsLayoutProps) {
                                         >
                                             <Avatar className="h-8 w-8">
                                                 <AvatarImage
-                                                    src={props.profile_picture}
+                                                    src={
+                                                        user.profile
+                                                            .profile_picture
+                                                    }
                                                     className="h-full w-full object-cover"
                                                 />
                                                 <AvatarFallback className="h-full w-full object-cover">
@@ -119,10 +119,10 @@ export default function UserSettingsLayout(props: UserSettingsLayoutProps) {
                                             </Avatar>
                                             <div className="grid flex-1 text-left text-sm leading-tight">
                                                 <span className="truncate font-semibold">
-                                                    {user.name}
+                                                    {user.account.name}
                                                 </span>
                                                 <span className="truncate text-xs">
-                                                    {user.email}
+                                                    {user.account.email}
                                                 </span>
                                             </div>
                                             <ChevronsUpDown className="ml-auto size-4" />

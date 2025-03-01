@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\PlatformSettings;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
@@ -15,53 +12,13 @@ use Inertia\Inertia;
 class AccountController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Request $request)
     {
-        $settings = PlatformSettings::pluck('value', 'key')->toArray();
-        $profile = $request->user()->profile;
-        $profile_picture = $profile->profile_picture;
-        return Inertia::render("User/Settings/Account", [
-            'name' => $request->user()->name,
-            'email' => $request->user()->email,
-            'profile_picture' => $profile_picture ? Storage::url($profile->profile_picture) : null,
-            'organization_logo' => PlatformSettings::getCanonicalOrganizationLogo(),
-            'organization_name' => PlatformSettings::getOrganizationName(),
-        ]);
-        return Inertia::render("User/Settings/Account");
+        return Inertia::render(
+            "User/Settings/Account",
+        );
     }
 
     /**
@@ -115,13 +72,5 @@ class AccountController extends Controller
         $user->save();
 
         return to_route('user.settings.account');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }

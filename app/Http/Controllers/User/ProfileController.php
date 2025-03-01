@@ -3,14 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Membership;
-use App\Models\PlatformSettings;
-use App\Models\Profile;
-use App\Models\User;
-use App\Models\UserMembership;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -58,25 +51,8 @@ class ProfileController extends Controller
 
     public function edit(Request $request)
     {
-        $user = $request->user();
-        $settings = PlatformSettings::pluck('value', 'key')->toArray();
-        $profile = $request->user()->profile;
-
-        // Only one membership for now
-        $memberships = UserMembership::where('user_id', $user->id)->get()->all();
-        $membership = Membership::find($memberships[0]->membership_id)->name;
-
-        $profile_picture = $profile->profile_picture;
-
-        return Inertia::render("User/Settings/Profile", [
-            'name' => $request->user()->name,
-            'email' => $request->user()->email,
-            'display_name' => $profile->display_name,
-            'social_url' => $profile->social_url,
-            'profile_picture' => $profile_picture ? Storage::url($profile->profile_picture) : null,
-            'organization_name' => PlatformSettings::getOrganizationName(),
-            'organization_logo' => PlatformSettings::getCanonicalOrganizationLogo(),
-            'membership' => $membership
-        ]);
+        return Inertia::render(
+            "User/Settings/Profile",
+        );
     }
 }
