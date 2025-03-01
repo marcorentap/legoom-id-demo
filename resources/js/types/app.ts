@@ -32,3 +32,10 @@ export interface Organization {
     name: string;
     logo: string;
 }
+
+export interface Application {
+    id: string;
+    name: string;
+    secret: string;
+    redirect: string;
+}

@@ -4,13 +4,6 @@ import {
 } from '@/components/admin/applications';
 import AdminDashboardLayout from '@/Layouts/AdminDashboardLayout';
 
-export interface Application {
-    app_id: string;
-    app_name: string;
-    app_secret: string;
-    app_callback: string;
-}
-
 export interface ApplicationProps {
     apps: Application[];
 }

@@ -22,12 +22,7 @@ class ApplicationController extends Controller
      */
     public function edit(Request $request): Response
     {
-        $apps = Client::select(
-            ['id as app_id', 'name as app_name', 'secret as app_secret', 'redirect as app_callback']
-        )
-            ->get();
-        $settings = PlatformSettings::pluck('value', 'key')->toArray();
-        $profilePicture = $request->user()->profile->getCanonicalProfilePicture();
+        $apps = Client::all()->select('id', 'name', 'secret', 'redirect');
         return Inertia::render("Admin/Applications", [
             'apps' => $apps,
         ]);
@@ -41,7 +36,7 @@ class ApplicationController extends Controller
             $request->all(),
             [
                 'name' => 'string|max:255',
-                'callback' => 'url|max:255',
+                'redirect' => 'url|max:255',
             ]
         );
         if ($validator->fails()) {
@@ -51,7 +46,7 @@ class ApplicationController extends Controller
         Client::create([
             'user_id' => $request->user()->id,
             'name' => $validated['name'],
-            'redirect' => $validated['callback'],
+            'redirect' => $validated['redirect'],
             'secret' => Str::random(40),
             'personal_access_client' => false,
             'password_client' => false,
@@ -63,12 +58,13 @@ class ApplicationController extends Controller
     /**
      * @return RedirectResponse
      */
-    public function update(Request $request, string $id): RedirectResponse {
+    public function update(Request $request, string $id): RedirectResponse
+    {
         $validator = Validator::make(
             $request->all(),
             [
                 'update_name' => 'string|max:255|nullable',
-                'update_callback' => 'url|max:255|nullable',
+                'update_redirect' => 'url|max:255|nullable',
             ]
         );
         if ($validator->fails()) {
@@ -79,8 +75,8 @@ class ApplicationController extends Controller
         if ($validated['update_name']) {
             $client->name = $validated['update_name'];
         }
-        if ($validated['update_callback']) {
-            $client->redirect = $validated['update_callback'];
+        if ($validated['update_redirect']) {
+            $client->redirect = $validated['update_redirect'];
         }
         $client->save();
 
@@ -90,7 +86,8 @@ class ApplicationController extends Controller
     /**
      * @return RedirectResponse
      */
-    public function destroy(Request $request, string $id): RedirectResponse {
+    public function destroy(Request $request, string $id): RedirectResponse
+    {
         $client = Client::find($id);
         if ($client) {
             $client->delete();

@@ -1,3 +1,4 @@
+import { Application } from '@/types/app';
 import { router } from '@inertiajs/react';
 import {
     ColumnDef,
@@ -22,32 +23,25 @@ import {
     TableRow,
 } from '../ui/table';
 
-export interface Application {
-    app_id: string;
-    app_name: string;
-    app_secret: string;
-    app_callback: string;
-}
-
 export interface ApplicationTableProps {
     apps: Application[];
 }
 
 const columns: ColumnDef<Application>[] = [
     {
-        accessorKey: 'app_name',
+        accessorKey: 'name',
         header: 'Name',
     },
     {
-        accessorKey: 'app_callback',
-        header: 'Name',
+        accessorKey: 'redirect',
+        header: 'Redirect',
     },
     {
-        accessorKey: 'app_id',
+        accessorKey: 'id',
         header: 'ID',
     },
     {
-        accessorKey: 'app_secret',
+        accessorKey: 'secret',
         header: 'Secret',
     },
 ];
@@ -58,7 +52,7 @@ export interface EditDialogProps {
     onOpenChange(open: boolean): void;
     errors?: {
         update_name: string;
-        update_callback: string;
+        update_redirect: string;
     };
 }
 
@@ -66,18 +60,18 @@ export function EditDialog(props: EditDialogProps) {
     const form = useForm();
     const app = props.application;
     const nameError = props.errors?.update_name;
-    const callbackError = props.errors?.update_callback;
+    const redirectError = props.errors?.update_redirect;
 
     function onSubmit() {
         router.post(
-            route('admin.applications.update', app?.app_id),
+            route('admin.applications.update', app?.id),
             form.getValues(),
             { preserveState: 'errors' },
         );
     }
 
     function onDelete() {
-        router.delete(route('admin.applications.update', app?.app_id), {
+        router.delete(route('admin.applications.update', app?.id), {
             preserveState: 'errors',
         });
     }
@@ -95,8 +89,8 @@ export function EditDialog(props: EditDialogProps) {
                 {nameError ? (
                     <div className="text-sm text-red-500">{nameError}</div>
                 ) : null}
-                {callbackError ? (
-                    <div className="text-sm text-red-500">{callbackError}</div>
+                {redirectError ? (
+                    <div className="text-sm text-red-500">{redirectError}</div>
                 ) : null}
                 <form>
                     <div className="flex flex-col gap-4">
@@ -104,27 +98,27 @@ export function EditDialog(props: EditDialogProps) {
                             <Label htmlFor="update_name">Name</Label>
                             <Input
                                 id="update_name"
-                                placeholder={app?.app_name}
+                                placeholder={app?.name}
                                 {...form.register('update_name')}
                             />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="update_callback">
-                                Callback URL
+                            <Label htmlFor="update_redirect">
+                                Redirect URL
                             </Label>
                             <Input
-                                id="update_callback"
-                                placeholder={app?.app_callback}
-                                {...form.register('update_callback')}
+                                id="update_redirect"
+                                placeholder={app?.redirect}
+                                {...form.register('update_redirect')}
                             />
                         </div>
                         <div className="grid gap-2">
                             <Label>ID</Label>
-                            <Input value={app?.app_id} readOnly={true} />
+                            <Input value={app?.id} readOnly={true} />
                         </div>
                         <div className="grid gap-2">
                             <Label>Secret</Label>
-                            <Input value={app?.app_secret} readOnly={true} />
+                            <Input value={app?.secret} readOnly={true} />
                         </div>
                     </div>
                     <div className="mt-3 flex justify-between">
@@ -153,17 +147,19 @@ export interface ApplicationFormProps {
     organization_logo: string;
     errors?: {
         name: string;
-        callback: string;
+        redirect: string;
     };
 }
 
 export function ApplicationForm(props: ApplicationFormProps) {
     const form = useForm();
     const nameError = props.errors?.name;
-    const callbackError = props.errors?.callback;
+    const redirectError = props.errors?.redirect;
 
     function onSubmit() {
-        router.post(route('admin.applications', form.getValues()));
+        router.post(route('admin.applications'), form.getValues(), {
+            preserveState: 'errors',
+        });
     }
 
     return (
@@ -175,8 +171,8 @@ export function ApplicationForm(props: ApplicationFormProps) {
                 {nameError ? (
                     <div className="text-sm text-red-500">{nameError}</div>
                 ) : null}
-                {callbackError ? (
-                    <div className="text-sm text-red-500">{callbackError}</div>
+                {redirectError ? (
+                    <div className="text-sm text-red-500">{redirectError}</div>
                 ) : null}
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <div className="flex flex-col gap-4">
@@ -189,11 +185,11 @@ export function ApplicationForm(props: ApplicationFormProps) {
                             />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="callback">Callback URL</Label>
+                            <Label htmlFor="redirect">Redirect URL</Label>
                             <Input
-                                id="callback"
+                                id="redirect"
                                 placeholder="http://example.com/callback"
-                                {...form.register('callback')}
+                                {...form.register('redirect')}
                             />
                         </div>
                     </div>
