@@ -1,15 +1,8 @@
 import { LoginForm, RegisterForm } from '@/components/auth';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import AdminDashboardLayout from '@/Layouts/AdminDashboardLayout';
 import { Head, router, usePage } from '@inertiajs/react';
 import { Upload } from 'lucide-react';
@@ -29,8 +22,13 @@ export default function Settings(props: SettingsProps) {
     const [filename, setFilename] = useState<string | null>(null);
 
     const onSubmit = function (data, e) {
-        let values = form.getValues();
-        router.post(route('admin.settings.update'), values);
+        const values = form.getValues();
+        if (values.organization_logo) {
+            values.organization_logo = values.organization_logo[0];
+        }
+        router.post(route('admin.settings.update'), values, {
+            preserveState: 'errors',
+        });
     };
 
     return (
@@ -39,82 +37,59 @@ export default function Settings(props: SettingsProps) {
             <AdminDashboardLayout title="Settings" {...props}>
                 <div className="max-w-xl">
                     <Card className="mb-5 p-5">
-                        <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)}>
-                                <FormField
-                                    control={form.control}
-                                    name="organization_name"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>
-                                                Organization Name
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder={settings.name}
-                                                    {...field}
-                                                    value={field.value ?? ''}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="organization_logo"
-                                    render={({ field: { onChange, ref } }) => (
-                                        <FormItem>
-                                            <FormLabel>
-                                                Organization Logo
-                                            </FormLabel>
-                                            <FormControl>
-                                                <div className="relative rounded-md border-4 border-dotted p-1">
-                                                    <Input
-                                                        type="file"
-                                                        onChange={(e) => {
-                                                            if (
-                                                                e.target.files
-                                                            ) {
-                                                                const file =
-                                                                    e.target
-                                                                        .files[0];
-                                                                if (file) {
-                                                                    onChange(
-                                                                        file,
-                                                                    );
-                                                                    setFilename(
-                                                                        file.name,
-                                                                    );
-                                                                }
-                                                            }
-                                                        }}
-                                                        ref={ref}
-                                                        className="full absolute inset-0 h-full cursor-pointer opacity-0"
-                                                    />
-                                                    <Upload className="m-auto" />
-                                                    <div className="m-auto text-center font-semibold">
-                                                        Upload Picture
-                                                    </div>
-                                                    <div className="m-auto text-center text-sm">
-                                                        {filename
-                                                            ? filename
-                                                            : 'Click or drag a file here'}
-                                                    </div>
-                                                </div>
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                            <div className="flex flex-col gap-4">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="organization_name">
+                                        Organization Name
+                                    </Label>
+                                    <Input
+                                        id="organization_name"
+                                        placeholder={settings.name}
+                                        {...form.register('organization_name')}
+                                    />
+                                </div>
+                                <div>
+                                    <Label htmlFor="organization_name">
+                                        Organization Logo
+                                    </Label>
+                                    <div className="relative flex-col rounded-md border-4 border-dotted p-1">
+                                        <Upload className="m-auto" />
+                                        <div className="text-center font-semibold">
+                                            Upload Picture
+                                        </div>
+                                        {filename ? (
+                                            <div className="text-center">
+                                                {filename}
+                                            </div>
+                                        ) : null}
+                                        <Input
+                                            className="full absolute inset-0 h-full cursor-pointer opacity-0"
+                                            type="file"
+                                            {...form.register(
+                                                '...organization_logo',
+                                                {
+                                                    onChange: (e) => {
+                                                        const logo =
+                                                            form.getValues()
+                                                                .organization_logo[0];
+                                                        setFilename(logo.name);
+                                                    },
+                                                },
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
                                 <Button
                                     className="mt-5 rounded-full"
                                     type="submit"
                                 >
                                     Submit
                                 </Button>
-                            </form>
-                        </Form>
+                            </div>
+                        </form>
                     </Card>
                     <div className="mb-1 text-xl font-semibold">Preview</div>
                     <div className="grid gap-5">
