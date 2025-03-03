@@ -83,9 +83,6 @@ class AuthorizationController extends pAuthorizationController
             'request' => $request,
             'authToken' => $authToken,
             'csrfToken' => csrf_token(),
-            'organization_name' => $settings['name'],
-            'organization_logo' => Storage::url($settings['logo']),
         ]);
     }
 }
-
