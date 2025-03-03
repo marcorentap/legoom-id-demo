@@ -20,6 +20,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->string('role')->default('user');
+            $table->string('membership_id')->default('1');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

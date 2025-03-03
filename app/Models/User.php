@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -54,8 +55,8 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
-    public function memberships(): BelongsToMany
+    public function membership(): BelongsTo
     {
-        return $this->belongsToMany(Membership::class, 'user_memberships');
+        return $this->belongsTo(Membership::class);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PlatformSettings;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -50,17 +51,7 @@ class UserController extends Controller
      */
     public function edit(Request $request): Response
     {
-        $users = DB::table('user_memberships')
-            ->leftJoin('users', 'user_id', '=', 'users.id')
-            ->leftJoin('memberships', 'membership_id', '=', 'memberships.id')
-            ->where('users.role', '=', 'user')
-            ->select(
-                'users.name as name',
-                'users.email as email',
-                'users.email_verified_at as email_verified_at',
-                'memberships.name as membership',
-            )
-            ->get();
+        $users = User::with('membership:id,name')->get()->makeHidden('membership_id');
         return Inertia::render("Admin/Users", [
             'users' => $users,
         ]);

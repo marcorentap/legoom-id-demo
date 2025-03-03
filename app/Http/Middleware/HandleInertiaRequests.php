@@ -33,14 +33,14 @@ class HandleInertiaRequests extends Middleware
     {
         $user = $request->user();
         $profile = $user ? $user->profile : null;
-        $membership = $user ? $user->memberships->first() : null;
+        $membership = $user ? $user->membership : null;
         $settings = PlatformSettings::pluck('value', 'key');
 
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
-                ],
+            ],
             'user' => [
                 'account' => $user ? [
                     'id' => $user->id,

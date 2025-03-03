@@ -42,10 +42,8 @@ class DatabaseSeeder extends Seeder
 
         $memberships = DB::table('memberships')->pluck('id');
         foreach (User::all() as $user) {
-            $userMembership = new UserMembership;
-            $userMembership->user_id = $user->id;
-            $userMembership->membership_id = fake()->randomElement($memberships);
-            $userMembership->save();
+            $user->membership_id = fake()->randomElement($memberships);
+            $user->save();
 
             $profile = new Profile;
             $profile->user_id = $user->id;
