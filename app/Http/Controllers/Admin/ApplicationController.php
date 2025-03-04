@@ -14,15 +14,16 @@ use Inertia\Response;
 use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Str;
+use Laravel\Passport\ClientRepository;
 
 class ApplicationController extends Controller
 {
     /**
      * @return Response
      */
-    public function edit(Request $request): Response
+    public function edit(Request $request, ClientRepository $clientRepo): Response
     {
-        $apps = Client::all()->select('id', 'name', 'secret', 'redirect');
+        $apps = Passport::client()->where('revoked', '=', false)->get()->makeVisible('secret');
         return Inertia::render("Admin/Applications", [
             'apps' => $apps,
         ]);
@@ -30,7 +31,7 @@ class ApplicationController extends Controller
     /**
      * @return RedirectResponse
      */
-    public function create(Request $request): RedirectResponse
+    public function create(Request $request, ClientRepository $clientRepo): RedirectResponse
     {
         $validator = Validator::make(
             $request->all(),
@@ -43,22 +44,18 @@ class ApplicationController extends Controller
             return to_route("admin.applications")->withErrors($validator);
         }
         $validated = $validator->validated();
-        Client::create([
-            'user_id' => $request->user()->id,
-            'name' => $validated['name'],
-            'redirect' => $validated['redirect'],
-            'secret' => Str::random(40),
-            'personal_access_client' => false,
-            'password_client' => false,
-            'revoked' => false
-        ]);
+        $clientRepo->create(
+            $request->user()->id,
+            $validated['name'],
+            $validated['redirect'],
+        );
 
         return to_route('admin.applications');
     }
     /**
      * @return RedirectResponse
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, ClientRepository $clientRepo, string $id): RedirectResponse
     {
         $validator = Validator::make(
             $request->all(),
@@ -72,13 +69,14 @@ class ApplicationController extends Controller
         }
         $validated = $validator->validated();
         $client = Client::find($id);
-        if ($validated['update_name']) {
-            $client->name = $validated['update_name'];
+        if (!$validated['update_name']) {
+            $validated['update_name'] = $client->name;
         }
-        if ($validated['update_redirect']) {
-            $client->redirect = $validated['update_redirect'];
+        if (!$validated['update_redirect']) {
+            $validated['update_redirect'] = $client->redirect;
         }
-        $client->save();
+
+        $clientRepo->update($client, $validated['update_name'], $validated['update_redirect']);
 
         return to_route("admin.applications");
     }
@@ -86,11 +84,11 @@ class ApplicationController extends Controller
     /**
      * @return RedirectResponse
      */
-    public function destroy(Request $request, string $id): RedirectResponse
+    public function destroy(Request $request, ClientRepository $clientRepo, string $id): RedirectResponse
     {
         $client = Client::find($id);
         if ($client) {
-            $client->delete();
+            $clientRepo->delete($client);
         }
         return to_route('admin.applications');
     }
